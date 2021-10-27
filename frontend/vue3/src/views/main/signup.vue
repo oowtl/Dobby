@@ -25,7 +25,7 @@
             v-model="state.form.userId"
             placeholder="5~8글자, 영문/숫자"
           ></el-input>
-          <button type="button" class="checkDuplBtn" @click="checkNickDupl">
+          <button type="button" class="checkDuplBtn" @click="checkIdDupl">
             중복 확인
           </button>
         </el-form-item>
@@ -154,9 +154,14 @@ export default {
       },
     })
 
-    const checkNickDupl = function() {
+    const checkIdDupl = function() {
       info.dialogVisible = true
       info.message = '사용 가능한 아이디입니다'
+    }
+
+    const checkNickDupl = function() {
+      info.dialogVisible = true
+      info.message = '사용 가능한 닉네임입니다'
     }
 
     const checkMailDupl = function() {
@@ -177,7 +182,15 @@ export default {
       })
     }
 
-    return { signupForm, info, state, checkNickDupl, checkMailDupl, signup }
+    return {
+      signupForm,
+      info,
+      state,
+      checkIdDupl,
+      checkNickDupl,
+      checkMailDupl,
+      signup,
+    }
   },
 }
 </script>
@@ -185,7 +198,7 @@ export default {
 <style>
 .signupDiv {
   display: flex;
-  height: 85vh;
+  height: 80vh;
   align-items: center;
 }
 
