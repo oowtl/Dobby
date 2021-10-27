@@ -1,30 +1,32 @@
 <template>
-  <div class="signupBox">
-    <h1>내 손 안의 비서 DOBBY</h1>
-    <p>회원가입 하고 DOBBY를 만나보세요</p>
+  <div class="selectSignup">
+    <div class="signupBox">
+      <h1>내 손 안의 비서 DOBBY</h1>
+      <p>회원가입 하고 DOBBY를 만나보세요</p>
 
-    <router-link class="signupRouter" to="/signup">
-      <div>
-        <img src="@/assets/dobby.png" alt="" /> <br />
-        <p>Dobby 회원가입</p>
-      </div>
-    </router-link>
-    <router-link class="signupRouter" to="/sign">
-      <div>
-        <img src="@/assets/naver.png" alt="" />
-        <br />
-        <p>네이버 회원가입</p>
-      </div>
-    </router-link>
-    <router-link class="signupRouter" to="/sign">
-      <div>
-        <img src="@/assets/google.png" alt="" />
-        <br />
-        <p>구글 회원가입</p>
-      </div>
-    </router-link>
-    <br />
-    <router-link to="/main"><button>돌아가기</button></router-link>
+      <router-link class="signupRouter" to="/signup">
+        <div>
+          <img src="@/assets/dobby.png" alt="" /> <br />
+          <p>Dobby 회원가입</p>
+        </div>
+      </router-link>
+      <router-link class="signupRouter" to="/sign">
+        <div>
+          <img src="@/assets/naver.png" alt="" />
+          <br />
+          <p>네이버 회원가입</p>
+        </div>
+      </router-link>
+      <router-link class="signupRouter" to="/sign">
+        <div>
+          <img src="@/assets/google.png" alt="" />
+          <br />
+          <p>구글 회원가입</p>
+        </div>
+      </router-link>
+      <br />
+      <router-link to="/main"><button>돌아가기</button></router-link>
+    </div>
   </div>
 </template>
 
@@ -35,14 +37,17 @@ export default {
 </script>
 
 <style>
+.selectSignup {
+  display: flex;
+  height: 85vh;
+  align-items: center;
+}
+
 .signupBox {
-  position: absolute;
   width: 100%;
   min-width: 200px;
   max-width: 1500px;
-  left: 50%;
-  /* top: 50%; */
-  transform: translateX(-50%);
+  margin: 0 auto;
 }
 
 .signupBox > p {
@@ -85,7 +90,7 @@ export default {
 .signupBox > a > button {
   width: 300px;
   height: 50px;
-  margin-top: 70px;
+  margin: 5%;
   font-size: 20px;
   font-family: 'Gowun Batang', serif !important;
   color: white;
@@ -115,9 +120,13 @@ export default {
     margin-top: -20px;
   }
 
+  .signupBox > h1 {
+    margin: 0;
+  }
+
   .signupBox > a > button {
     width: 200px;
-    margin-top: 10px;
+    margin: 10px 0;
   }
 }
 
