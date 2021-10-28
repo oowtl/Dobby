@@ -71,6 +71,7 @@
 <script>
 import { reactive } from '@vue/reactivity'
 import { onBeforeMount } from '@vue/runtime-core'
+import axios from 'axios';
 export default {
   name: 'main',
   setup() {
@@ -97,7 +98,17 @@ export default {
     )
 
     const login = function() {
-      alert('login')
+      alert("enter");
+      alert(info.userId);
+      axios.post("http://k5d105.p.ssafy.io:3000/gettest",{
+        headers : { "Content-Type" : "application/json"},
+        id : info.userId
+      })
+      .then((res) => {
+        if(res.data[0].data["password"] == info.userPw){
+          alert("success");
+        }
+      })
     }
 
     return { info, login }
