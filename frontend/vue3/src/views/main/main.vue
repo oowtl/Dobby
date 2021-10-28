@@ -73,9 +73,14 @@
 <script>
 import { reactive } from '@vue/reactivity'
 import { onBeforeMount } from '@vue/runtime-core'
+import axios from 'axios'
+// import { useRouter } from 'vue-router'
+
 export default {
   name: 'main',
   setup() {
+    // const router = useRouter()
+
     const info = reactive({
       size: true,
       userId: '',
@@ -99,7 +104,12 @@ export default {
     )
 
     const login = function() {
-      alert('login')
+      axios
+        .post('http://localhost:8080/login', {
+          id: info.userId,
+          password: info.userPw,
+        })
+        .then(() => alert('로그인'))
     }
 
     return { info, login }

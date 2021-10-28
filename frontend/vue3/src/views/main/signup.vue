@@ -16,8 +16,8 @@
         <el-form-item label="이름" prop="userName">
           <el-input v-model="state.form.userName" maxlength="8"></el-input>
         </el-form-item>
-        <el-form-item label="전화번호" prop="phone">
-          <el-input v-model="state.form.phone"></el-input>
+        <el-form-item label="전화번호" prop="userPhone">
+          <el-input v-model="state.form.userPhone" maxlength="11"></el-input>
         </el-form-item>
         <el-form-item label="아이디" prop="userId">
           <el-input
@@ -35,10 +35,10 @@
             중복 확인
           </button>
         </el-form-item>
-        <el-form-item label="닉네임" prop="nick">
+        <el-form-item label="닉네임" prop="userNick">
           <el-input
             class="duplInput"
-            v-model="state.form.nick"
+            v-model="state.form.userNick"
             placeholder="최대 8글자"
             @input="info.checkNick = false"
           ></el-input>
@@ -70,7 +70,7 @@
           ></el-input
           ><button
             class="checkDuplBtn"
-            @click="checkMailDupl"
+            @click="checkEmailDupl"
             type="button"
             :disabled="info.checkEmail"
           >
@@ -84,17 +84,22 @@
       <router-link to="/main"
         ><button class="signupCancel">취소</button></router-link
       >
-      <button class="signupBtn" @click="signup" type="button">회원가입</button>
+      <button class="signupBtn" @click="clickSignup" type="button">
+        회원가입
+      </button>
     </div>
   </div>
 </template>
 
 <script>
 import { reactive, ref } from 'vue'
+import axios from 'axios'
+import { useRouter } from 'vue-router'
 
 export default {
   name: 'signup',
   setup() {
+    const router = useRouter()
     const signupForm = ref(null)
 
     const info = reactive({
@@ -109,8 +114,8 @@ export default {
       form: {
         userName: '',
         userId: '',
-        phone: '',
-        nick: '',
+        userPhone: '',
+        userNick: '',
         password: '',
         checkPw: '',
         email: '',
@@ -119,7 +124,7 @@ export default {
       },
       rules: {
         userName: [{ required: true, message: '필수 입력 항목입니다' }],
-        phone: [
+        userPhone: [
           { required: true, message: '필수 입력 항목입니다' },
           {
             pattern: /^01[0-1]{1}[0-9]{3,4}[0-9]{4}/,
@@ -134,7 +139,7 @@ export default {
             message: '아이디는 영문/숫자 조합',
           },
         ],
-        nick: [
+        userNick: [
           { required: true, message: '필수 입력 항목입니다' },
           { max: 8, message: '8글자까지 입력 가능합니다' },
         ],
@@ -165,38 +170,53 @@ export default {
         email: [
           { required: true, message: '필수 입력 항목입니다' },
           {
-            pattern: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-z]{2,3}$/,
+            pattern: /^([0-9a-zA-Z]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z]{2,3})$/,
             message: '올바른 이메일 형식이 아닙니다',
           },
         ],
+        address: [{ required: true, message: '필수 입력 항목입니다' }],
       },
     })
 
     const checkIdDupl = function() {
-      info.dialogVisible = true
-      info.message = '사용 가능한 아이디입니다'
-      info.checkId = true
+      if (5 <= state.form.userId.length && state.form.userId.length <= 8) {
+        info.dialogVisible = true
+        info.message = '사용 가능한 아이디입니다'
+        info.checkId = true
+      }
     }
 
     const checkNickDupl = function() {
-      info.dialogVisible = true
-      info.message = '사용 가능한 닉네임입니다'
-      info.checkNick = true
+      if (state.form.userNick && state.form.userNick <= 8) {
+        info.dialogVisible = true
+        info.message = '사용 가능한 닉네임입니다'
+        info.checkNick = true
+      }
     }
 
-    const checkMailDupl = function() {
-      info.dialogVisible = true
-      info.message = '사용 가능한 이메일입니다'
-      info.checkEmail = true
+    const checkEmailDupl = function() {
+      if (state.form.email) {
+        info.dialogVisible = true
+        info.message = '사용 가능한 이메일입니다'
+        info.checkEmail = true
+      }
     }
 
-    const signup = function() {
-      console.log(986)
+    const clickSignup = function() {
       signupForm.value.validate((valid) => {
-        console.log(valid)
         if (valid) {
           if (info.checkId && info.checkNick && info.checkEmail) {
-            console.log('valid')
+            axios
+              .post('http://localhost:8080/signup', {
+                id: state.form.userId,
+                password: state.form.password,
+                email: state.form.email,
+                name: state.form.userName,
+                nickname: state.form.userNick,
+                phone: state.form.userPhone,
+                address: state.form.address,
+              })
+              .then(() => router.push({ name: 'main' }))
           } else {
             info.dialogVisible = true
             info.message = '중복 확인을 해 주세요'
@@ -213,8 +233,8 @@ export default {
       state,
       checkIdDupl,
       checkNickDupl,
-      checkMailDupl,
-      signup,
+      checkEmailDupl,
+      clickSignup,
     }
   },
 }

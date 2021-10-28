@@ -116,6 +116,11 @@ export default {
   margin: 10% 0 0 3%;
 }
 
+.findIdBtn:hover,
+.findPwBtn:hover {
+  box-shadow: 0 0 10px #a9c9de;
+}
+
 .findPwBtn,
 .findCancelBtn {
   width: 48%;
@@ -123,5 +128,9 @@ export default {
 
 .findCancelBtn {
   background-color: rgb(255, 155, 155);
+}
+
+.findCancelBtn:hover {
+  box-shadow: 0 0 10px rgb(255, 155, 155);
 }
 </style>
