@@ -24,8 +24,14 @@
             class="duplInput"
             v-model="state.form.userId"
             placeholder="5~8글자, 영문/숫자"
+            @input="info.checkId = false"
           ></el-input>
-          <button type="button" class="checkDuplBtn" @click="checkIdDupl">
+          <button
+            type="button"
+            class="checkDuplBtn"
+            @click="checkIdDupl"
+            :disabled="info.checkId"
+          >
             중복 확인
           </button>
         </el-form-item>
@@ -34,8 +40,14 @@
             class="duplInput"
             v-model="state.form.nick"
             placeholder="최대 8글자"
+            @input="info.checkNick = false"
           ></el-input>
-          <button type="button" class="checkDuplBtn" @click="checkNickDupl">
+          <button
+            type="button"
+            class="checkDuplBtn"
+            @click="checkNickDupl"
+            :disabled="info.checkNick"
+          >
             중복 확인
           </button>
         </el-form-item>
@@ -54,8 +66,14 @@
             class="duplInput"
             v-model="state.form.email"
             type="email"
+            @input="info.checkEmail = false"
           ></el-input
-          ><button class="checkDuplBtn" @click="checkMailDupl" type="button">
+          ><button
+            class="checkDuplBtn"
+            @click="checkMailDupl"
+            type="button"
+            :disabled="info.checkEmail"
+          >
             중복 확인
           </button>
         </el-form-item>
@@ -64,7 +82,7 @@
         </el-form-item>
       </el-form>
       <router-link to="/main"
-        ><button class="signupCancle">취소</button></router-link
+        ><button class="signupCancel">취소</button></router-link
       >
       <button class="signupBtn" @click="signup" type="button">회원가입</button>
     </div>
@@ -157,16 +175,19 @@ export default {
     const checkIdDupl = function() {
       info.dialogVisible = true
       info.message = '사용 가능한 아이디입니다'
+      info.checkId = true
     }
 
     const checkNickDupl = function() {
       info.dialogVisible = true
       info.message = '사용 가능한 닉네임입니다'
+      info.checkNick = true
     }
 
     const checkMailDupl = function() {
       info.dialogVisible = true
       info.message = '사용 가능한 이메일입니다'
+      info.checkEmail = true
     }
 
     const signup = function() {
@@ -174,8 +195,12 @@ export default {
       signupForm.value.validate((valid) => {
         console.log(valid)
         if (valid) {
-          console.log(valid)
-          console.log('valid')
+          if (info.checkId && info.checkNick && info.checkEmail) {
+            console.log('valid')
+          } else {
+            info.dialogVisible = true
+            info.message = '중복 확인을 해 주세요'
+          }
         } else {
           console.log('fail')
         }
@@ -249,7 +274,11 @@ export default {
   color: white;
 }
 
-.signupCancle,
+.checkDuplBtn:disabled {
+  background-color: rgb(211, 211, 211);
+}
+
+.signupCancel,
 .signupBtn {
   width: 45%;
   height: 35px;
@@ -260,12 +289,12 @@ export default {
   border-radius: 4px;
 }
 
-.signupCancle {
+.signupCancel {
   background-color: rgb(255, 155, 155);
   margin-right: 5%;
 }
 
-.signupCancle:hover {
+.signupCancel:hover {
   box-shadow: 0 0 10px rgb(255, 155, 155);
 }
 

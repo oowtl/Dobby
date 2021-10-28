@@ -17,7 +17,9 @@
           <span>PW</span>
           <input type="password" v-model="info.userPw" />
           <br />
-          <span class="mainFind">아이디/비밀번호 찾기</span>
+          <router-link to="/find"
+            ><span class="mainFind">아이디/비밀번호 찾기</span></router-link
+          >
         </div>
       </div>
       <div class="mainSocialLeft">
@@ -46,7 +48,7 @@
         <input type="password" placeholder="PW" v-model="info.userPw" />
         <br />
         <div class="mainMobFind">
-          <p>아이디/비밀번호 찾기</p>
+          <router-link to="/find"><p>아이디/비밀번호 찾기</p></router-link>
         </div>
         <br />
         <button @click="login">로그인</button>
@@ -118,6 +120,11 @@ export default {
   min-width: 270px;
   max-width: 700px;
   margin: 0 auto;
+}
+
+.mainDiv a,
+.mainMobile a {
+  text-decoration: none;
 }
 
 .mainDiv > img {
@@ -248,7 +255,7 @@ export default {
   text-align: end;
 }
 
-.mainMobFind > p {
+.mainMobFind > a > p {
   font-size: 14px;
   color: #a9c9de;
   cursor: pointer;
