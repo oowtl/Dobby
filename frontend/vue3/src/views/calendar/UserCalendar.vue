@@ -11,9 +11,17 @@
         class="calendar-todolist"/>
     </div>
   </div>
+  <teleport to="#destination">
+      <!-- 자식 엘리먼트 접근 -->
+      <VModal ref="modal">
+        modal content
+      </VModal>
+    </teleport>
 </template>
 
 <script>
+// vue
+import { ref } from "vue";
 
 // Calendar
 import '@fullcalendar/core/vdom' // solves problem with Vite
@@ -27,11 +35,28 @@ import listPlugin from '@fullcalendar/list'
 // Component
 import TodoList from '@/views/calendar/TodoList'
 
+// modal
+import VModal from '@/components/teleport/VueModal'
+
 export default {
   name: "UserCalendar",
   components: {
     FullCalendar, // make the <FullCalendar> tag available
-    TodoList
+    TodoList,
+    VModal
+  },
+  setup() {
+    // const disableTeleport = ref(false);
+    const modal = ref(null);
+    function showModal() {
+      // VMmodal.vue에 접근하여 show 함수 실행
+      modal.value.show();
+    }
+    return {
+      // disableTeleport,
+      modal,
+      showModal
+    };
   },
   data() {
     return {
@@ -43,12 +68,13 @@ export default {
           listPlugin
         ],
         headerToolbar: {
-          left: 'prev next today',
+          left: 'today prev,next',
           center: '',
           right: 'dayGridMonth timeGridWeek timeGridDay listWeek'
         },
         initialView: 'dayGridMonth',
         dateClick: this.handleClickDate,
+        eventClick: this.handleEventClick,
         events: [
           { title: 'event 1',
             start: '2021-10-01',
@@ -71,12 +97,23 @@ export default {
         eventColor: 'red', // color default?
         timeZone: "local", // local default
         display: 'list-item',
-      }
+      },
+      currentEvents:[],
     }
   },
   methods: {
     handleClickDate: function (arg) {
       alert('check your schedule!' + arg.dateStr)
+    },
+    handleEventClick(clickInfo) {
+      console.log(clickInfo.event)
+      this.showModal()
+      // if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
+      //   clickInfo.event.remove()
+      // }
+    },
+    handleEvents(events) {
+      this.currentEvents = events
     }
   }
 }
