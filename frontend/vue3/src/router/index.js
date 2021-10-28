@@ -3,6 +3,7 @@ import Main from '@/views/main/main'
 import SelectSignup from '@/views/main/select-signup'
 import Signup from '@/views/main/signup'
 import FindInfo from '@/views/main/findInfo'
+import NewGroup from '@/views/group/new-group'
 
 const routes = [
   {
@@ -33,6 +34,11 @@ const routes = [
     path: '/find',
     name: 'FindInfo',
     component: FindInfo,
+  },
+  {
+    path: '/newgroup',
+    name: 'NewGroup',
+    component: NewGroup,
   },
 ]
 
