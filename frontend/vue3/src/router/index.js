@@ -4,6 +4,7 @@ import SelectSignup from '@/views/main/select-signup'
 import Signup from '@/views/main/signup'
 import FindInfo from '@/views/main/findInfo'
 import NewGroup from '@/views/group/new-group'
+import UpdateGroup from '@/views/group/update-group'
 
 const routes = [
   {
@@ -39,6 +40,11 @@ const routes = [
     path: '/newgroup',
     name: 'NewGroup',
     component: NewGroup,
+  },
+  {
+    path: '/updategroup',
+    name: 'UpdateGroup',
+    component: UpdateGroup,
   },
 ]
 
