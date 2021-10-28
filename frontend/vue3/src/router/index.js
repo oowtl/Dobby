@@ -3,6 +3,7 @@ import Main from '@/views/main/main'
 import SelectSignup from '@/views/main/select-signup'
 import Signup from '@/views/main/signup'
 import Calendar from '@/views/calendar/Calendar'
+import FindInfo from '@/views/main/findInfo'
 
 const routes = [
   {
@@ -33,7 +34,12 @@ const routes = [
     path: '/calendar',
     name: 'Calendar',
     component: Calendar,
-  }
+  },
+  {
+    path: '/find',
+    name: 'FindInfo',
+    component: FindInfo,
+  },
 ]
 
 const router = createRouter({

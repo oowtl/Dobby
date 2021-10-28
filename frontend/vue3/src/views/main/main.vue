@@ -1,5 +1,5 @@
 <template>
-  <div v-if="info.size">
+  <div class="main" v-if="info.size">
     <div class="mainDiv">
       <img
         src="https://cdn.notefolio.net/img/4a/68/4a68c7b7158baee7602cedc5aef9c2fe42a5f680689f55b250107789f7c531b6_v1.jpg"
@@ -17,7 +17,9 @@
           <span>PW</span>
           <input type="password" v-model="info.userPw" />
           <br />
-          <span class="mainFind">아이디/비밀번호 찾기</span>
+          <router-link to="/find"
+            ><span class="mainFind">아이디/비밀번호 찾기</span></router-link
+          >
         </div>
       </div>
       <div class="mainSocialLeft">
@@ -46,7 +48,7 @@
         <input type="password" placeholder="PW" v-model="info.userPw" />
         <br />
         <div class="mainMobFind">
-          <p>아이디/비밀번호 찾기</p>
+          <router-link to="/find"><p>아이디/비밀번호 찾기</p></router-link>
         </div>
         <br />
         <button @click="login">로그인</button>
@@ -71,6 +73,7 @@
 <script>
 import { reactive } from '@vue/reactivity'
 import { onBeforeMount } from '@vue/runtime-core'
+import axios from 'axios';
 export default {
   name: 'main',
   setup() {
@@ -97,7 +100,17 @@ export default {
     )
 
     const login = function() {
-      alert('login')
+      alert("enter");
+      alert(info.userId);
+      axios.post("http://k5d105.p.ssafy.io:3000/gettest",{
+        headers : { "Content-Type" : "application/json"},
+        id : info.userId
+      })
+      .then((res) => {
+        if(res.data[0].data["password"] == info.userPw){
+          alert("success");
+        }
+      })
     }
 
     return { info, login }
@@ -106,18 +119,23 @@ export default {
 </script>
 
 <style>
-.mainDiv,
-.mainMobile {
-  position: absolute;
-  width: 100%;
-  min-width: 270px;
-  left: 50%;
-  top: 50%;
-  transform: translateX(-50%) translateY(-50%);
+.main {
+  display: flex;
+  height: 85vh;
+  align-items: center;
 }
 
-.mainDiv {
-  width: 700px;
+.mainDiv,
+.mainMobile {
+  width: 100%;
+  min-width: 270px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.mainDiv a,
+.mainMobile a {
+  text-decoration: none;
 }
 
 .mainDiv > img {
@@ -248,7 +266,7 @@ export default {
   text-align: end;
 }
 
-.mainMobFind > p {
+.mainMobFind > a > p {
   font-size: 14px;
   color: #a9c9de;
   cursor: pointer;
