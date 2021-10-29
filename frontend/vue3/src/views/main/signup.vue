@@ -91,6 +91,7 @@
 
 <script>
 import { reactive, ref } from 'vue'
+import axios from 'axios';
 
 export default {
   name: 'signup',
@@ -197,6 +198,20 @@ export default {
         if (valid) {
           if (info.checkId && info.checkNick && info.checkEmail) {
             console.log('valid')
+            axios.post("https://k5d105.p.ssafy.io:3030/signup",{
+              name: state.form.userName,
+              id: state.form.userId,
+              phone: state.form.phone,
+              nickname: state.form.nick,
+              password: state.form.password,
+              email: state.form.email,
+              address: state.form.address,
+            }
+             ,{
+
+              headers : { "Content-Type" : "application/json"},
+
+            })
           } else {
             info.dialogVisible = true
             info.message = '중복 확인을 해 주세요'
