@@ -11,7 +11,9 @@
 </template>
 
 <script>
+// teleport
 import teleportExample from '@/components/teleport/teleportExample'
+
 export default {
   components: {
     teleportExample
