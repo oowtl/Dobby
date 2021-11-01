@@ -55,7 +55,7 @@ export default {
 <style>
 .groupInfo {
   display: flex;
-  height: 80vh;
+  margin: 5% 0;
   align-items: center;
   overflow: auto;
 }
@@ -146,10 +146,6 @@ export default {
 }
 
 @media screen and (max-width: 570px) {
-  .groupInfo {
-    height: auto;
-  }
-
   .groupInfoTop img {
     float: none;
     width: 50%;
