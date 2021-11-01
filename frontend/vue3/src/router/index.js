@@ -2,15 +2,12 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Main from '@/views/main/main'
 import SelectSignup from '@/views/main/select-signup'
 import Signup from '@/views/main/signup'
-<<<<<<< HEAD
 import SuccessSignup from '@/views/main/success-signup'
 import FindInfo from '@/views/main/findInfo'
 import NewGroup from '@/views/group/new-group'
 import UpdateGroup from '@/views/group/update-group'
 import GroupInfo from '@/views/group/group-info-admin'
-=======
 import Calendar from '@/views/calendar/Calendar'
->>>>>>> features/mainPage
 
 const routes = [
   {
@@ -38,7 +35,6 @@ const routes = [
     component: Signup,
   },
   {
-<<<<<<< HEAD
     path: '/welcome',
     name: 'SuccessSignup',
     component: SuccessSignup,
@@ -63,12 +59,11 @@ const routes = [
     name: 'GroupInfo',
     component: GroupInfo,
   },
-=======
+  {
     path: '/calendar',
     name: 'Calendar',
     component: Calendar,
   }
->>>>>>> features/mainPage
 ]
 
 const router = createRouter({

@@ -4,12 +4,6 @@ import axios from 'axios'
 const BASE_URL = 'http://k5d105.p.ssafy.io:3000';
 
 export default createStore({
-<<<<<<< HEAD
-  state: {},
-  mutations: {},
-  actions: {},
-  modules: {},
-=======
   state: {
     calendarData: [],
   },
@@ -37,5 +31,4 @@ export default createStore({
     }
   },
   modules: {}
->>>>>>> features/mainPage
 })
