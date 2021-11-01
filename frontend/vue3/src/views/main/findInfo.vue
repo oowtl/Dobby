@@ -1,28 +1,77 @@
 <template>
   <div class="findInfo">
+    <el-dialog v-model="info.dialogVisible">
+      <span>{{ info.message }}</span>
+    </el-dialog>
     <div class="findId">
       <h2 v-if="info.find">아이디 찾기</h2>
       <h2 v-else>비밀번호 찾기</h2>
-      <p v-if="info.find">가입 시 등록한 이메일을 입력해 주세요</p>
-      <p v-else>가입 시 등록한 정보를 입력해 주세요</p>
-      <div v-if="info.find">
-        <el-input v-model="info.userEmail" placeholder="이메일"></el-input>
+      <div v-if="!info.result">
+        <p v-if="info.find">가입 시 등록한 이메일을 입력해 주세요</p>
+        <p v-else>가입 시 등록한 정보를 입력해 주세요</p>
+        <div v-if="info.find">
+          <el-input
+            v-model="info.userEmail"
+            placeholder="이메일"
+            @keyup.enter="clickFindId"
+          ></el-input>
+        </div>
+        <div v-else>
+          <el-input
+            v-model="info.userId"
+            placeholder="아이디"
+            @keyup.enter="clickFindPw"
+          ></el-input>
+          <el-input
+            v-model="info.userEmail"
+            placeholder="이메일"
+            @keyup.enter="clickFindPw"
+          ></el-input>
+        </div>
+        <button
+          class="findIdBtn"
+          v-if="info.find"
+          type="button"
+          @click="clickFindId"
+        >
+          아이디 찾기
+        </button>
+        <button class="findIdBtn" v-else type="button" @click="clickFindPw">
+          비밀번호 찾기
+        </button>
       </div>
+
       <div v-else>
-        <el-input v-model="info.userId" placeholder="아이디"></el-input>
-        <el-input v-model="info.userEmail" placeholder="이메일"></el-input>
+        <div v-if="info.find">
+          <span>아이디: {{ info.userId }}</span>
+        </div>
+        <div v-else>
+          <p style="margin-top:5%">비밀번호 변경</p>
+          <el-form
+            class="changePwForm"
+            :model="state.form"
+            :rules="state.rules"
+            ref="changePwForm"
+            :label-position="state.form.align"
+            label-width="103px"
+          >
+            <el-form-item label="비밀번호" prop="password">
+              <el-input
+                v-model="state.form.password"
+                type="password"
+                placeholder="8~16, 영문+숫자+특수문자"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="비밀번호 확인" prop="checkPw">
+              <el-input v-model="state.form.checkPw" type="password"></el-input>
+            </el-form-item>
+          </el-form>
+          <button class="findIdBtn" type="button" @click="clickChangePw">
+            비밀번호 변경
+          </button>
+        </div>
       </div>
-      <button
-        class="findIdBtn"
-        v-if="info.find"
-        type="button"
-        @click="clickFindIdBtn"
-      >
-        아이디 찾기
-      </button>
-      <button class="findIdBtn" v-else type="button" @click="clickFindPwBtn">
-        비밀번호 찾기
-      </button>
+
       <router-link to="/main"
         ><button class="findCancelBtn">취소</button></router-link
       >
@@ -30,11 +79,16 @@
         class="findPwBtn"
         v-if="info.find"
         type="button"
-        @click="info.find = false"
+        @click=";(info.find = false), (info.result = false)"
       >
         비밀번호 찾기
       </button>
-      <button class="findPwBtn" v-else type="button" @click="info.find = true">
+      <button
+        class="findPwBtn"
+        v-else
+        type="button"
+        @click=";(info.find = true), (info.result = false)"
+      >
         아이디 찾기
       </button>
     </div>
@@ -42,24 +96,115 @@
 </template>
 
 <script>
-import { reactive } from '@vue/reactivity'
+import { reactive, ref } from 'vue'
+import axios from 'axios'
+
 export default {
   name: 'findInfo',
+
   setup() {
+    const changePwForm = ref(null)
+
     const info = reactive({
       find: true,
       userId: '',
       userEmail: '',
+      dialogVisible: false,
+      message: '',
+      result: false,
     })
 
-    const clickFindIdBtn = function() {
-      alert('findId')
+    const state = reactive({
+      form: {
+        password: '',
+        checkPw: '',
+        align: 'left',
+      },
+      rules: {
+        password: [
+          { required: true, message: '필수 입력 항목입니다' },
+          {
+            min: 8,
+            max: 16,
+            message: '비밀번호는 8~16자입니다',
+          },
+          {
+            pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{7,16}$/,
+            message: '영문, 숫자, 특수문자 조합 필요',
+          },
+        ],
+        checkPw: [
+          { required: true, message: '필수 입력 항목입니다' },
+          {
+            validator(rule, value, callback) {
+              if (value != state.form.password) {
+                callback(new Error('비밀번호가 일치하지 않습니다'))
+              } else {
+                callback()
+              }
+            },
+          },
+        ],
+      },
+    })
+
+    const clickFindId = function() {
+      if (info.userEmail) {
+        axios
+          .post('https://k5d105.p.ssafy.io:3030/users/findID', {
+            email: info.userEmail,
+          })
+          .then((res) => {
+            info.result = true
+            info.userId = res.data.id
+          })
+          .catch(() => {
+            info.dialogVisible = true
+            info.message = '일치하는 정보가 없습니다'
+          })
+      }
     }
 
-    const clickFindPwBtn = function() {
-      alert('findPw')
+    const clickFindPw = function() {
+      if (info.userId && info.userEmail) {
+        axios
+          .post('https://k5d105.p.ssafy.io:3030/users/findPW', {
+            id: info.userId,
+            email: info.userEmail,
+          })
+          .then(() => {
+            info.result = true
+          })
+          .catch(() => {
+            info.dialogVisible = true
+            info.message = '일치하는 정보가 없습니다'
+          })
+      }
     }
-    return { info, clickFindIdBtn, clickFindPwBtn }
+
+    const clickChangePw = function() {
+      changePwForm.value.validate((valid) => {
+        if (valid) {
+          axios
+            .post('https://k5d105.p.ssafy.io:3030/users/changePW', {
+              id: info.userId,
+              password: state.form.password,
+            })
+            .then(() => {
+              info.dialogVisible = true
+              info.message = '비밀번호가 변경되었습니다'
+            })
+        }
+      })
+    }
+    return {
+      changePwForm,
+      info,
+      state,
+      clickFindId,
+      clickFindPw,
+      clickChangePw,
+    }
   },
 }
 </script>
@@ -87,7 +232,7 @@ export default {
 .findId input,
 .findIdBtn {
   margin-top: 3%;
-  width: 70%;
+  width: 100%;
 }
 
 .findId input {
@@ -113,7 +258,12 @@ export default {
 }
 
 .findPwBtn {
-  margin: 10% 0 0 3%;
+  margin: 5% 0 0 3%;
+}
+
+.findIdBtn:hover,
+.findPwBtn:hover {
+  box-shadow: 0 0 10px #a9c9de;
 }
 
 .findPwBtn,
@@ -123,5 +273,41 @@ export default {
 
 .findCancelBtn {
   background-color: rgb(255, 155, 155);
+}
+
+.findCancelBtn:hover {
+  box-shadow: 0 0 10px rgb(255, 155, 155);
+}
+
+.changePwForm .el-input {
+  text-align: left;
+}
+.changePwForm .el-input input {
+  margin: 0;
+}
+
+.findInfo .el-dialog {
+  width: 30%;
+  top: 20%;
+  max-width: 400px;
+}
+
+.findInfo .el-dialog__body {
+  word-break: keep-all;
+}
+
+@media screen and (max-width: 950px) {
+  .findInfo .el-dialog {
+    width: 40%;
+    top: 20%;
+    word-break: keep-all;
+  }
+}
+
+@media screen and (max-width: 680px) {
+  .findInfo .el-dialog {
+    width: 80%;
+    top: 20%;
+  }
 }
 </style>

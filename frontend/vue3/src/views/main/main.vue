@@ -1,6 +1,9 @@
 <template>
-  <div class="main" v-if="info.size">
-    <div class="mainDiv">
+  <div class="main">
+    <el-dialog v-model="info.dialogVisible">
+      <span>{{ info.message }}</span>
+    </el-dialog>
+    <div class="mainDiv" v-if="info.size">
       <img
         src="https://cdn.notefolio.net/img/4a/68/4a68c7b7158baee7602cedc5aef9c2fe42a5f680689f55b250107789f7c531b6_v1.jpg"
         alt="logo"
@@ -17,8 +20,8 @@
           <span>PW</span>
           <input type="password" v-model="info.userPw" />
           <br />
-          <router-link to="/find"
-            ><span class="mainFind">아이디/비밀번호 찾기</span></router-link
+          <router-link class="mainFind" to="/find"
+            ><span>아이디/비밀번호 찾기</span></router-link
           >
         </div>
       </div>
@@ -34,9 +37,8 @@
         ><button class="mainSign">회원가입</button></router-link
       >
     </div>
-  </div>
-  <div v-else>
-    <div class="mainMobile">
+
+    <div class="mainMobile" v-else>
       <img
         style="width: 47%; border-radius:4px;"
         src="https://cdn.notefolio.net/img/4a/68/4a68c7b7158baee7602cedc5aef9c2fe42a5f680689f55b250107789f7c531b6_v1.jpg"
@@ -73,14 +75,18 @@
 <script>
 import { reactive } from '@vue/reactivity'
 import { onBeforeMount } from '@vue/runtime-core'
-import axios from 'axios';
+import axios from 'axios'
+
 export default {
   name: 'main',
   setup() {
+    // const router = useRouter()
     const info = reactive({
       size: true,
       userId: '',
       userPw: '',
+      dialogVisible: false,
+      message: '',
     })
     onBeforeMount(() => {
       if (window.innerWidth < 730) {
@@ -100,19 +106,20 @@ export default {
     )
 
     const login = function() {
-      alert("enter");
-      alert(info.userId);
-      axios.post("https://k5d105.p.ssafy.io:3030/gettest",
-      {
-        id : info.userId
-      }, {
-          headers : { "Content-Type" : "application/json"},
-      })
-      .then((res) => {
-        if(res.data[0].data["password"] == info.userPw){
-          alert("success");
-        }
-      })
+      if (info.userId && info.userPw) {
+        axios
+          .post('https://k5d105.p.ssafy.io:3030/users/login', {
+            id: info.userId,
+            password: info.userPw,
+          })
+          .then((res) => {
+            console.log(res)
+          })
+          .catch(() => {
+            info.dialogVisible = true
+            info.message = '아이디 또는 비밀번호가 잘못 되었습니다'
+          })
+      }
     }
 
     return { info, login }
@@ -125,6 +132,16 @@ export default {
   display: flex;
   height: 85vh;
   align-items: center;
+}
+
+.main .el-dialog {
+  width: 30%;
+  top: 20%;
+  max-width: 400px;
+}
+
+.main .el-dialog__body {
+  word-break: keep-all;
 }
 
 .mainDiv,
@@ -174,7 +191,7 @@ export default {
 .mainSocialRight:hover,
 .mainMobLogin > button:hover,
 .mainMobSocialLogin > div:hover {
-  box-shadow: 0 0 10px #719ece;
+  box-shadow: 0 0 10px #a9c9de;
 }
 
 .mainLoginDiv > div {
@@ -213,7 +230,7 @@ export default {
 .mainFind {
   font-size: 13px !important;
   color: #a9c9de;
-  padding-left: 50px;
+  margin-left: 50px;
   cursor: pointer;
 }
 
@@ -269,6 +286,7 @@ export default {
 }
 
 .mainMobFind > a > p {
+  display: inline-block;
   font-size: 14px;
   color: #a9c9de;
   cursor: pointer;
@@ -305,5 +323,20 @@ export default {
 .mainMobSign > a {
   font-size: 15px;
   color: #a9c9de;
+}
+
+@media screen and (max-width: 950px) {
+  .main .el-dialog {
+    width: 40%;
+    top: 20%;
+    word-break: keep-all;
+  }
+}
+
+@media screen and (max-width: 680px) {
+  .main .el-dialog {
+    width: 80%;
+    top: 20%;
+  }
 }
 </style>

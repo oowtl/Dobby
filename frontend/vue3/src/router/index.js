@@ -2,7 +2,11 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Main from '@/views/main/main'
 import SelectSignup from '@/views/main/select-signup'
 import Signup from '@/views/main/signup'
+import SuccessSignup from '@/views/main/success-signup'
 import FindInfo from '@/views/main/findInfo'
+import NewGroup from '@/views/group/new-group'
+import UpdateGroup from '@/views/group/update-group'
+import GroupInfo from '@/views/group/group-info-admin'
 
 const routes = [
   {
@@ -30,9 +34,29 @@ const routes = [
     component: Signup,
   },
   {
+    path: '/welcome',
+    name: 'SuccessSignup',
+    component: SuccessSignup,
+  },
+  {
     path: '/find',
     name: 'FindInfo',
     component: FindInfo,
+  },
+  {
+    path: '/newgroup',
+    name: 'NewGroup',
+    component: NewGroup,
+  },
+  {
+    path: '/updategroup',
+    name: 'UpdateGroup',
+    component: UpdateGroup,
+  },
+  {
+    path: '/group',
+    name: 'GroupInfo',
+    component: GroupInfo,
   },
 ]
 

@@ -1,7 +1,9 @@
 <template>
   <div id="nav">
     <router-link to="/main">main</router-link> |
-    <router-link to="/about">About</router-link>
+    <router-link to="/about">About</router-link> |
+    <router-link to="/newgroup">newGroup</router-link> |
+    <router-link to="/group">Group</router-link> |
   </div>
   <router-view />
 </template>
