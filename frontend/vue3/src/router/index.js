@@ -4,6 +4,7 @@ import SelectSignup from '@/views/main/select-signup'
 import Signup from '@/views/main/signup'
 import Calendar from '@/views/calendar/Calendar'
 import Schedule from '@/views/schedule/Schedule'
+import FindInfo from '@/views/main/findInfo'
 
 const routes = [
   {
@@ -39,6 +40,11 @@ const routes = [
     path: '/schedule',
     name: 'Schedule',
     component: Schedule,
+  },
+  {
+    path: '/find',
+    name: 'FindInfo',
+    component: FindInfo,
   }
 ]
 

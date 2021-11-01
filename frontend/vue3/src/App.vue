@@ -5,8 +5,20 @@
     <router-link to="/calendar">Calendar</router-link> |
     <router-link to="/schedule">Schedule</router-link>
   </div>
+  <div class ="my-modal">
+    <teleportExample />
+  </div>
   <router-view />
 </template>
+
+<script>
+import teleportExample from '@/components/teleport/teleportExample'
+export default {
+  components: {
+    teleportExample
+  }
+}
+</script>
 
 <style>
 #app {
