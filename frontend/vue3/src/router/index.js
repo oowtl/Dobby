@@ -6,7 +6,7 @@ import SuccessSignup from '@/views/main/success-signup'
 import FindInfo from '@/views/main/findInfo'
 import NewGroup from '@/views/group/new-group'
 import UpdateGroup from '@/views/group/update-group'
-import GroupInfo from '@/views/group/group-info'
+import GroupInfo from '@/views/group/group-info-admin'
 
 const routes = [
   {

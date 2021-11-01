@@ -191,7 +191,7 @@ export default {
 .mainSocialRight:hover,
 .mainMobLogin > button:hover,
 .mainMobSocialLogin > div:hover {
-  box-shadow: 0 0 10px #719ece;
+  box-shadow: 0 0 10px #a9c9de;
 }
 
 .mainLoginDiv > div {
