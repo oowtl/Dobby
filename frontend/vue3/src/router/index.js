@@ -3,6 +3,7 @@ import Main from '@/views/main/main'
 import SelectSignup from '@/views/main/select-signup'
 import Signup from '@/views/main/signup'
 import Calendar from '@/views/calendar/Calendar'
+import Schedule from '@/views/schedule/Schedule'
 
 const routes = [
   {
@@ -33,6 +34,11 @@ const routes = [
     path: '/calendar',
     name: 'Calendar',
     component: Calendar,
+  },
+  {
+    path: '/schedule',
+    name: 'Schedule',
+    component: Schedule,
   }
 ]
 
