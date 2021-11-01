@@ -5,6 +5,7 @@ import Signup from '@/views/main/signup'
 import FindInfo from '@/views/main/findInfo'
 import NewGroup from '@/views/group/new-group'
 import UpdateGroup from '@/views/group/update-group'
+import GroupInfo from '@/views/group/group-info'
 
 const routes = [
   {
@@ -45,6 +46,11 @@ const routes = [
     path: '/updategroup',
     name: 'UpdateGroup',
     component: UpdateGroup,
+  },
+  {
+    path: '/group',
+    name: 'GroupInfo',
+    component: GroupInfo,
   },
 ]
 
