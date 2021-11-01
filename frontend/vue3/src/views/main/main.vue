@@ -105,11 +105,24 @@ export default {
 
     const login = function() {
       axios
-        .post('http://localhost:8080/login', {
+        .post('https://k5d105.p.ssafy.io:3030/login', {
           id: info.userId,
           password: info.userPw,
         })
         .then(() => alert('로그인'))
+      // alert("enter");
+      // alert(info.userId);
+      // axios.post("https://k5d105.p.ssafy.io:3030/gettest",
+      // {
+      //   id : info.userId
+      // }, {
+      //     headers : { "Content-Type" : "application/json"},
+      // })
+      // .then((res) => {
+      //   if(res.data[0].data["password"] == info.userPw){
+      //     alert("success");
+      //   }
+      // })
     }
 
     return { info, login }
