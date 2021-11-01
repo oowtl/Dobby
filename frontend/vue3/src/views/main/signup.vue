@@ -94,10 +94,12 @@
 <script>
 import { reactive, ref } from 'vue'
 import axios from 'axios'
+import { useRouter } from 'vue-router'
 
 export default {
   name: 'signup',
   setup() {
+    const router = useRouter()
     const signupForm = ref(null)
 
     const info = reactive({
@@ -178,25 +180,62 @@ export default {
 
     const checkIdDupl = function() {
       if (5 <= state.form.userId.length && state.form.userId.length <= 8) {
-        info.dialogVisible = true
-        info.message = '사용 가능한 아이디입니다'
-        info.checkId = true
+        axios
+          .get('https://k5d105.p.ssafy.io:3030/users/checkDuplicateID', {
+            params: { id: state.form.userId },
+          })
+          .then((res) => {
+            if (res.data.valid) {
+              info.dialogVisible = true
+              info.message = '사용 가능한 아이디입니다'
+              info.checkId = true
+            } else {
+              info.dialogVisible = true
+              info.message = '이미 등록된 아이디입니다'
+            }
+          })
       }
     }
 
     const checkNickDupl = function() {
-      if (state.form.userNick && state.form.userNick <= 8) {
-        info.dialogVisible = true
-        info.message = '사용 가능한 닉네임입니다'
-        info.checkNick = true
+      if (state.form.userNick && state.form.userNick.length <= 8) {
+        axios
+          .get('https://k5d105.p.ssafy.io:3030/users/checkDuplicateNick', {
+            params: {
+              nickname: state.form.userNick,
+            },
+          })
+          .then((res) => {
+            console.log(res)
+            if (res.data.valid) {
+              info.dialogVisible = true
+              info.message = '사용 가능한 닉네임입니다'
+              info.checkNick = true
+            } else {
+              info.dialogVisible = true
+              info.message = '이미 등록된 닉네임입니다'
+            }
+          })
       }
     }
 
     const checkEmailDupl = function() {
       if (state.form.email) {
-        info.dialogVisible = true
-        info.message = '사용 가능한 이메일입니다'
-        info.checkEmail = true
+        axios
+          .get('https://k5d105.p.ssafy.io:3030/users/checkDuplicateEmail', {
+            params: { email: state.form.email },
+          })
+          .then((res) => {
+            console.log(res)
+            if (res.data.valid) {
+              info.dialogVisible = true
+              info.message = '사용 가능한 이메일입니다'
+              info.checkEmail = true
+            } else {
+              info.dialogVisible = true
+              info.message = '이미 등록된 이메일입니다'
+            }
+          })
       }
     }
 
@@ -204,21 +243,8 @@ export default {
       signupForm.value.validate((valid) => {
         if (valid) {
           if (info.checkId && info.checkNick && info.checkEmail) {
-            // axios
-            //   .post('http://localhost:8080/signup', {
-            //     id: state.form.userId,
-            //     password: state.form.password,
-            //     email: state.form.email,
-            //     name: state.form.userName,
-            //     nickname: state.form.userNick,
-            //     phone: state.form.userPhone,
-            //     address: state.form.address,
-            //   })
-            //   .then(() => router.push({ name: 'main' }))
-            console.log('valid')
-            axios.post(
-              'https://k5d105.p.ssafy.io:3030/signup',
-              {
+            axios
+              .post('https://k5d105.p.ssafy.io:3030/users/signup', {
                 name: state.form.userName,
                 id: state.form.userId,
                 phone: state.form.phone,
@@ -226,11 +252,8 @@ export default {
                 password: state.form.password,
                 email: state.form.email,
                 address: state.form.address,
-              },
-              {
-                headers: { 'Content-Type': 'application/json' },
-              }
-            )
+              })
+              .then(() => router.push({ name: 'SuccessSignup' }))
           } else {
             info.dialogVisible = true
             info.message = '중복 확인을 해 주세요'

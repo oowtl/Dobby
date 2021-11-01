@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Main from '@/views/main/main'
 import SelectSignup from '@/views/main/select-signup'
 import Signup from '@/views/main/signup'
+import SuccessSignup from '@/views/main/success-signup'
 import FindInfo from '@/views/main/findInfo'
 import NewGroup from '@/views/group/new-group'
 import UpdateGroup from '@/views/group/update-group'
@@ -31,6 +32,11 @@ const routes = [
     path: '/signup',
     name: 'Signup',
     component: Signup,
+  },
+  {
+    path: '/welcome',
+    name: 'SuccessSignup',
+    component: SuccessSignup,
   },
   {
     path: '/find',
