@@ -2,19 +2,18 @@
   <div>
     <teleport to="#destination">
       <!-- 자식 엘리먼트 접근 -->
-      <VModal ref="modal">
-        modal content
-      </VModal>
+      <CalendarModal ref="modal">
+      </CalendarModal>
     </teleport>
   </div>
 </template>
 
 <script>
-import VModal from "./VueModal";
+import CalendarModal from "./CalendarModal";
 import { ref } from "vue";
 export default {
   components: {
-    VModal
+    CalendarModal
   },
   setup() {
     const disableTeleport = ref(false);

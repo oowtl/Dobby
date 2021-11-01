@@ -12,11 +12,10 @@
     </div>
   </div>
   <teleport to="#destination">
-      <!-- 자식 엘리먼트 접근 -->
-      <VModal ref="modal">
-        modal content
-      </VModal>
-    </teleport>
+    <!-- 자식 엘리먼트 접근 -->
+    <CalendarModal ref="modal" :curModal="curModal">
+    </CalendarModal>
+  </teleport>
 </template>
 
 <script>
@@ -36,14 +35,14 @@ import listPlugin from '@fullcalendar/list'
 import TodoList from '@/views/calendar/TodoList'
 
 // modal
-import VModal from '@/components/teleport/VueModal'
+import CalendarModal from '@/components/teleport/CalendarModal'
 
 export default {
   name: "UserCalendar",
   components: {
     FullCalendar, // make the <FullCalendar> tag available
     TodoList,
-    VModal
+    CalendarModal
   },
   setup() {
     // const disableTeleport = ref(false);
@@ -60,6 +59,7 @@ export default {
   },
   data() {
     return {
+      curModal:{},
       calendarOptions: {
         plugins: [ 
           dayGridPlugin,
@@ -77,26 +77,33 @@ export default {
         eventClick: this.handleEventClick,
         events: [
           { title: 'event 1',
-            start: '2021-10-01',
-            end: '2021-10-07',
+            start: '2021-11-01',
+            end: '2021-11-07',
             color: 'yellow',
             textColor:'black',
             extendedProps: {
               // status: 'done',
             }
           },
-          { title: 'event 2', date: '2021-10-28' },
+          { title: 'event 2', date: '2021-11-28' },
           {
             title: 'event 3 add time',
-            start: '2021-10-27T18:00:00',
-            end: '2021-10-30T18:00:00',
+            start: '2021-11-26T18:00:00',
+            end: '2021-11-30T18:00:00',
             color: '#156452',
             textColor: 'black',
+          },
+          {
+            title: 'event 4 today',
+            start: '2021-11-03T18:00:00',
+            end: '2021-11-03T21:00:00',
+            color: 'blue', // 당일 일정은 textColor 를 먹지 않는다.
           }
         ],
         eventColor: 'red', // color default?
         timeZone: "local", // local default
         display: 'list-item',
+        height: "auto" // height
       },
       currentEvents:[],
     }
@@ -106,7 +113,11 @@ export default {
       alert('check your schedule!' + arg.dateStr)
     },
     handleEventClick(clickInfo) {
-      console.log(clickInfo.event)
+      this.curModal = {
+        // 'Calendar': clickInfo.event._def
+        'title' : clickInfo.event._def.title
+      }
+      console.log(this.curModal)
       this.showModal()
       // if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
       //   clickInfo.event.remove()

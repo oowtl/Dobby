@@ -21,12 +21,6 @@ export default {
     // const store = useStore()
 
     const test = 1
-    
-    
-    // onMount( () => {
-    //   // this.getCalendrData()
-    //   this.$store.dispatch('getCalendrData')
-    // })
 
     return {
       test,
@@ -38,15 +32,11 @@ export default {
       'getCalendarData',
     ]),
   },
-  created: () => {
-    
+  beforeMount() {
+    console.log('hi created')
+    this.getCalendarData()
   },
 
-  beforeMount: () => {
-    // this.getCalendrData()
-    this.$store.dispatch('getCalendrData')
-    // this.store.dispatch('getCalendarData')
-  }
 }
 </script>
 
