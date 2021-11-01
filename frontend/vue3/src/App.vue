@@ -4,7 +4,8 @@
     <router-link to="/about">About</router-link> |
     <router-link to="/newgroup">newGroup</router-link> |
     <router-link to="/group">Group</router-link> |
-    <router-link to="/calendar">Calendar</router-link>
+    <router-link to="/calendar">Calendar</router-link> |
+    <router-link to="/schedule">Schedule</router-link>
   </div>
   <div class ="teleport-modal">
     <teleportExample />

@@ -8,6 +8,7 @@ import NewGroup from '@/views/group/new-group'
 import UpdateGroup from '@/views/group/update-group'
 import GroupInfo from '@/views/group/group-info-admin'
 import Calendar from '@/views/calendar/Calendar'
+import Schedule from '@/views/schedule/Schedule'
 
 const routes = [
   {
@@ -63,7 +64,12 @@ const routes = [
     path: '/calendar',
     name: 'Calendar',
     component: Calendar,
-  }
+  },
+  {
+    path: '/schedule',
+    name: 'Schedule',
+    component: Schedule,
+  },
 ]
 
 const router = createRouter({
