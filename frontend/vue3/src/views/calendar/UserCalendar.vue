@@ -114,10 +114,8 @@ export default {
     },
     handleEventClick(clickInfo) {
       this.curModal = {
-        // 'Calendar': clickInfo.event._def
-        'title' : clickInfo.event._def.title
+        'data' : clickInfo.event
       }
-      console.log(this.curModal)
       this.showModal()
       // if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
       //   clickInfo.event.remove()
