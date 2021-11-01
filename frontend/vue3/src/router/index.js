@@ -7,6 +7,7 @@ import FindInfo from '@/views/main/findInfo'
 import NewGroup from '@/views/group/new-group'
 import UpdateGroup from '@/views/group/update-group'
 import GroupInfo from '@/views/group/group-info-admin'
+import Calendar from '@/views/calendar/Calendar'
 
 const routes = [
   {
@@ -58,6 +59,11 @@ const routes = [
     name: 'GroupInfo',
     component: GroupInfo,
   },
+  {
+    path: '/calendar',
+    name: 'Calendar',
+    component: Calendar,
+  }
 ]
 
 const router = createRouter({
