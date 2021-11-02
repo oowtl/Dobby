@@ -8,17 +8,17 @@
         src="https://cdn.notefolio.net/img/4a/68/4a68c7b7158baee7602cedc5aef9c2fe42a5f680689f55b250107789f7c531b6_v1.jpg"
         alt="logo"
       />
-      <button class="mainLogin" style="float: right" @click="login">
+      <button class="mainLogin blueBtn" style="float: right" @click="login">
         로그인
       </button>
       <div class="mainLoginDiv">
         <div>
           <span>ID</span>
-          <input type="text" v-model="info.userId" />
+          <input class="input" type="text" v-model="info.userId" />
         </div>
         <div>
           <span>PW</span>
-          <input type="password" v-model="info.userPw" />
+          <input class="input" type="password" v-model="info.userPw" />
           <br />
           <router-link class="mainFind" to="/find"
             ><span>아이디/비밀번호 찾기</span></router-link
@@ -34,7 +34,7 @@
         <span>구글 로그인</span>
       </div>
       <router-link to="/selectsignup"
-        ><button class="mainSign">회원가입</button></router-link
+        ><button class="mainSign blueBtn">회원가입</button></router-link
       >
     </div>
 
@@ -45,15 +45,25 @@
         alt="logo"
       />
       <div class="mainMobLogin">
-        <input type="text" placeholder="ID" v-model="info.userId" />
+        <input
+          class="input"
+          type="text"
+          placeholder="ID"
+          v-model="info.userId"
+        />
         <br />
-        <input type="password" placeholder="PW" v-model="info.userPw" />
+        <input
+          class="input"
+          type="password"
+          placeholder="PW"
+          v-model="info.userPw"
+        />
         <br />
         <div class="mainMobFind">
           <router-link to="/find"><p>아이디/비밀번호 찾기</p></router-link>
         </div>
         <br />
-        <button @click="login">로그인</button>
+        <button class="blueBtn" @click="login">로그인</button>
       </div>
       <div class="mainMobSocialLogin">
         <div>
@@ -76,11 +86,13 @@
 import { reactive } from '@vue/reactivity'
 import { onBeforeMount } from '@vue/runtime-core'
 import axios from 'axios'
+import { useRouter } from 'vue-router'
+import './main.css'
 
 export default {
   name: 'main',
   setup() {
-    // const router = useRouter()
+    const router = useRouter()
     const info = reactive({
       size: true,
       userId: '',
@@ -112,8 +124,8 @@ export default {
             id: info.userId,
             password: info.userPw,
           })
-          .then((res) => {
-            console.log(res)
+          .then(() => {
+            router.push({ name: 'Calendar' })
           })
           .catch(() => {
             info.dialogVisible = true
@@ -128,12 +140,6 @@ export default {
 </script>
 
 <style>
-.main {
-  display: flex;
-  height: 85vh;
-  align-items: center;
-}
-
 .main .el-dialog {
   width: 30%;
   top: 20%;
@@ -166,11 +172,6 @@ export default {
 .mainDiv > button,
 .mainSign,
 .mainMobLogin > button {
-  color: white;
-  background-color: #a9c9de;
-  border: none;
-  border-radius: 4px;
-  font-family: 'Gowun Batang', serif !important;
   font-size: 17px;
 }
 
@@ -185,11 +186,8 @@ export default {
   margin-top: 20px;
 }
 
-.mainDiv > button:hover,
-.mainSign:hover,
 .mainSocialLeft:hover,
 .mainSocialRight:hover,
-.mainMobLogin > button:hover,
 .mainMobSocialLogin > div:hover {
   box-shadow: 0 0 10px #a9c9de;
 }
@@ -203,15 +201,10 @@ export default {
   height: 40px;
   width: 230px;
   padding-left: 10px;
-  border: 2px solid #a9c9de;
-  border-radius: 4px;
 }
 
 .mainLoginDiv > div > input:focus,
 .mainMobLogin > input:focus {
-  outline: none;
-  border: 2px solid #a9c9de;
-  box-shadow: 0 0 5px #a9c9de;
   margin-bottom: 0;
 }
 

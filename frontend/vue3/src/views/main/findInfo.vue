@@ -29,14 +29,19 @@
           ></el-input>
         </div>
         <button
-          class="findIdBtn"
+          class="findIdBtn blueBtn"
           v-if="info.find"
           type="button"
           @click="clickFindId"
         >
           아이디 찾기
         </button>
-        <button class="findIdBtn" v-else type="button" @click="clickFindPw">
+        <button
+          class="findIdBtn blueBtn"
+          v-else
+          type="button"
+          @click="clickFindPw"
+        >
           비밀번호 찾기
         </button>
       </div>
@@ -66,17 +71,21 @@
               <el-input v-model="state.form.checkPw" type="password"></el-input>
             </el-form-item>
           </el-form>
-          <button class="findIdBtn" type="button" @click="clickChangePw">
+          <button
+            class="findIdBtn blueBtn"
+            type="button"
+            @click="clickChangePw"
+          >
             비밀번호 변경
           </button>
         </div>
       </div>
 
       <router-link to="/main"
-        ><button class="findCancelBtn">취소</button></router-link
+        ><button class="findCancelBtn redBtn">취소</button></router-link
       >
       <button
-        class="findPwBtn"
+        class="findPwBtn blueBtn"
         v-if="info.find"
         type="button"
         @click=";(info.find = false), (info.result = false)"
@@ -84,7 +93,7 @@
         비밀번호 찾기
       </button>
       <button
-        class="findPwBtn"
+        class="findPwBtn blueBtn"
         v-else
         type="button"
         @click=";(info.find = true), (info.result = false)"
@@ -235,48 +244,19 @@ export default {
   width: 100%;
 }
 
-.findId input {
-  border: 2px solid #a9c9de;
-}
-
-.findId input:hover,
-.findId input:focus {
-  outline: none;
-  border: 2px solid #a9c9de;
-  box-shadow: 0 0 5px #a9c9de;
-}
-
 .findIdBtn,
 .findPwBtn,
 .findCancelBtn {
   height: 40px;
-  border: none;
-  border-radius: 2px;
-  background-color: #a9c9de;
-  font-family: 'Gowun Batang', serif !important;
-  color: white;
 }
 
 .findPwBtn {
   margin: 5% 0 0 3%;
 }
 
-.findIdBtn:hover,
-.findPwBtn:hover {
-  box-shadow: 0 0 10px #a9c9de;
-}
-
 .findPwBtn,
 .findCancelBtn {
   width: 48%;
-}
-
-.findCancelBtn {
-  background-color: rgb(255, 155, 155);
-}
-
-.findCancelBtn:hover {
-  box-shadow: 0 0 10px rgb(255, 155, 155);
 }
 
 .changePwForm .el-input {

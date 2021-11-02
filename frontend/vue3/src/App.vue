@@ -7,10 +7,12 @@
     <router-link to="/calendar">Calendar</router-link> |
     <router-link to="/schedule">Schedule</router-link>
   </div>
-  <div class ="teleport-modal">
+  <div class="teleport-modal">
     <teleportExample />
   </div>
-  <router-view />
+  <div class="routerView">
+    <router-view />
+  </div>
 </template>
 
 <script>
@@ -19,12 +21,19 @@ import teleportExample from '@/components/teleport/teleportExample'
 
 export default {
   components: {
-    teleportExample
-  }
+    teleportExample,
+  },
 }
 </script>
 
 <style>
+html,
+body,
+#app {
+  height: 100vh;
+  margin: 0;
+}
+
 #app {
   font-family: 'Gowun Batang', serif !important;
   -webkit-font-smoothing: antialiased;
@@ -44,5 +53,13 @@ export default {
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+.routerView {
+  display: table-cell;
+  width: 100vw;
+  height: 90vh;
+  vertical-align: middle;
+  text-align: center;
 }
 </style>

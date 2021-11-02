@@ -28,7 +28,7 @@
           ></el-input>
           <button
             type="button"
-            class="checkDuplBtn"
+            class="checkDuplBtn blueBtn"
             @click="checkIdDupl"
             :disabled="info.checkId"
           >
@@ -44,7 +44,7 @@
           ></el-input>
           <button
             type="button"
-            class="checkDuplBtn"
+            class="checkDuplBtn blueBtn"
             @click="checkNickDupl"
             :disabled="info.checkNick"
           >
@@ -69,7 +69,7 @@
             @input="info.checkEmail = false"
           ></el-input
           ><button
-            class="checkDuplBtn"
+            class="checkDuplBtn blueBtn"
             @click="checkEmailDupl"
             type="button"
             :disabled="info.checkEmail"
@@ -82,9 +82,9 @@
         </el-form-item>
       </el-form>
       <router-link to="/main"
-        ><button class="signupCancel">취소</button></router-link
+        ><button class="signupCancel redBtn">취소</button></router-link
       >
-      <button class="signupBtn" @click="clickSignup" type="button">
+      <button class="signupBtn blueBtn" @click="clickSignup" type="button">
         회원가입
       </button>
     </div>
@@ -300,22 +300,6 @@ export default {
   margin: 10% 0 5% 0;
 }
 
-.signupForm > div > div > div > input {
-  border: 2px solid #a9c9de;
-}
-
-.signupForm > div > div > div > input:hover,
-.signupForm > div > div > div > input:focus,
-.checkDuplBtn:hover {
-  outline: none;
-  border: 2px solid #a9c9de;
-  box-shadow: 0 0 5px #a9c9de;
-}
-
-.el-form-item.is-error .el-input__inner {
-  border-color: rgb(255, 155, 155) !important;
-}
-
 .duplInput {
   width: 76% !important;
 }
@@ -324,11 +308,6 @@ export default {
   margin-left: 3%;
   width: 21%;
   height: 40px;
-  border: none;
-  border-radius: 2px;
-  background-color: #a9c9de;
-  font-family: 'Gowun Batang', serif !important;
-  color: white;
 }
 
 .checkDuplBtn:disabled {
@@ -340,28 +319,14 @@ export default {
   width: 45%;
   height: 35px;
   margin: 5% 0;
-  font-family: 'Gowun Batang', serif !important;
-  color: white;
-  border: none;
-  border-radius: 4px;
 }
 
 .signupCancel {
-  background-color: rgb(255, 155, 155);
   margin-right: 5%;
 }
 
-.signupCancel:hover {
-  box-shadow: 0 0 10px rgb(255, 155, 155);
-}
-
 .signupBtn {
-  background-color: #a9c9de;
   margin-left: 5%;
-}
-
-.signupBtn:hover {
-  box-shadow: 0 0 10px #a9c9de;
 }
 
 @media screen and (max-width: 950px) {
