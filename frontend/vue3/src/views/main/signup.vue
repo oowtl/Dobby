@@ -19,18 +19,18 @@
         <el-form-item label="전화번호" prop="userPhone">
           <el-input v-model="state.form.userPhone" maxlength="11"></el-input>
         </el-form-item>
-        <el-form-item label="아이디" prop="userId">
+        <el-form-item label="이메일" prop="email">
           <el-input
             class="duplInput"
-            v-model="state.form.userId"
-            placeholder="5~8글자, 영문/숫자"
-            @input="info.checkId = false"
-          ></el-input>
-          <button
-            type="button"
+            v-model="state.form.email"
+            type="email"
+            @input="info.checkEmail = false"
+          ></el-input
+          ><button
             class="checkDuplBtn blueBtn"
-            @click="checkIdDupl"
-            :disabled="info.checkId"
+            @click="checkEmailDupl"
+            type="button"
+            :disabled="info.checkEmail"
           >
             중복 확인
           </button>
@@ -61,22 +61,6 @@
         <el-form-item label="비밀번호 확인" prop="checkPw">
           <el-input v-model="state.form.checkPw" type="password"></el-input>
         </el-form-item>
-        <el-form-item label="이메일" prop="email">
-          <el-input
-            class="duplInput"
-            v-model="state.form.email"
-            type="email"
-            @input="info.checkEmail = false"
-          ></el-input
-          ><button
-            class="checkDuplBtn blueBtn"
-            @click="checkEmailDupl"
-            type="button"
-            :disabled="info.checkEmail"
-          >
-            중복 확인
-          </button>
-        </el-form-item>
         <el-form-item label="주소" prop="address">
           <el-input v-model="state.form.address" type="email"></el-input>
         </el-form-item>
@@ -105,7 +89,6 @@ export default {
     const info = reactive({
       message: '',
       dialogVisible: false,
-      checkId: false,
       checkNick: false,
       checkEmail: false,
     })
@@ -113,12 +96,11 @@ export default {
     const state = reactive({
       form: {
         userName: '',
-        userId: '',
         userPhone: '',
+        email: '',
         userNick: '',
         password: '',
         checkPw: '',
-        email: '',
         address: '',
         align: 'left',
       },
@@ -131,12 +113,11 @@ export default {
             message: '유효하지 않은 전화번호입니다',
           },
         ],
-        userId: [
+        email: [
           { required: true, message: '필수 입력 항목입니다' },
-          { min: 5, max: 8, message: '아이디는 5~8자입니다' },
           {
-            pattern: /^[A-Za-z]{1,8}[0-9]{0,7}/,
-            message: '아이디는 영문/숫자 조합',
+            pattern: /^([0-9a-zA-Z]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z]{2,3})$/,
+            message: '올바른 이메일 형식이 아닙니다',
           },
         ],
         userNick: [
@@ -167,31 +148,25 @@ export default {
             },
           },
         ],
-        email: [
-          { required: true, message: '필수 입력 항목입니다' },
-          {
-            pattern: /^([0-9a-zA-Z]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z]{2,3})$/,
-            message: '올바른 이메일 형식이 아닙니다',
-          },
-        ],
         address: [{ required: true, message: '필수 입력 항목입니다' }],
       },
     })
 
-    const checkIdDupl = function() {
-      if (5 <= state.form.userId.length && state.form.userId.length <= 8) {
+    const checkEmailDupl = function() {
+      if (state.form.email) {
         axios
-          .get('https://k5d105.p.ssafy.io:3030/users/checkDuplicateID', {
-            params: { id: state.form.userId },
+          .get('https://k5d105.p.ssafy.io:3030/users/checkDuplicateEmail', {
+            params: { email: state.form.email },
           })
           .then((res) => {
+            console.log(res)
             if (res.data.valid) {
               info.dialogVisible = true
-              info.message = '사용 가능한 아이디입니다'
-              info.checkId = true
+              info.message = '사용 가능한 이메일입니다'
+              info.checkEmail = true
             } else {
               info.dialogVisible = true
-              info.message = '이미 등록된 아이디입니다'
+              info.message = '이미 등록된 이메일입니다'
             }
           })
       }
@@ -219,30 +194,10 @@ export default {
       }
     }
 
-    const checkEmailDupl = function() {
-      if (state.form.email) {
-        axios
-          .get('https://k5d105.p.ssafy.io:3030/users/checkDuplicateEmail', {
-            params: { email: state.form.email },
-          })
-          .then((res) => {
-            console.log(res)
-            if (res.data.valid) {
-              info.dialogVisible = true
-              info.message = '사용 가능한 이메일입니다'
-              info.checkEmail = true
-            } else {
-              info.dialogVisible = true
-              info.message = '이미 등록된 이메일입니다'
-            }
-          })
-      }
-    }
-
     const clickSignup = function() {
       signupForm.value.validate((valid) => {
         if (valid) {
-          if (info.checkId && info.checkNick && info.checkEmail) {
+          if (info.checkNick && info.checkEmail) {
             axios
               .post('https://k5d105.p.ssafy.io:3030/users/signup', {
                 name: state.form.userName,
@@ -268,9 +223,8 @@ export default {
       signupForm,
       info,
       state,
-      checkIdDupl,
-      checkNickDupl,
       checkEmailDupl,
+      checkNickDupl,
       clickSignup,
     }
   },
