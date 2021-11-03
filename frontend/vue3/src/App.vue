@@ -5,7 +5,8 @@
     <router-link to="/newgroup">newGroup</router-link> |
     <router-link to="/group">Group</router-link> |
     <router-link to="/calendar">Calendar</router-link> |
-    <router-link to="/schedule">Schedule</router-link>
+    <router-link to="/schedule">Schedule</router-link> |
+    <router-link to="/chart">chart</router-link> |
   </div>
   <div class="teleport-modal">
     <teleportExample />
@@ -61,5 +62,9 @@ body,
   height: 90vh;
   vertical-align: middle;
   text-align: center;
+}
+
+* {
+  font-family: 'Gowun Batang', serif !important;
 }
 </style>
