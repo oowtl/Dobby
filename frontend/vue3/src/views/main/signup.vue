@@ -201,7 +201,6 @@ export default {
             axios
               .post('https://k5d105.p.ssafy.io:3030/users/signup', {
                 name: state.form.userName,
-                id: state.form.userId,
                 phone: state.form.phone,
                 nickname: state.form.nick,
                 password: state.form.password,

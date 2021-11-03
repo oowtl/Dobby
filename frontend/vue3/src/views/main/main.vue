@@ -13,15 +13,15 @@
       </button>
       <div class="mainLoginDiv">
         <div>
-          <span>ID</span>
-          <input class="input" type="text" v-model="info.userId" />
+          <span>Email</span>
+          <input class="input" type="text" v-model="info.userEmail" />
         </div>
         <div>
           <span>PW</span>
           <input class="input" type="password" v-model="info.userPw" />
           <br />
           <router-link class="mainFind" to="/find"
-            ><span>아이디/비밀번호 찾기</span></router-link
+            ><span>이메일/비밀번호 찾기</span></router-link
           >
         </div>
       </div>
@@ -48,8 +48,8 @@
         <input
           class="input"
           type="text"
-          placeholder="ID"
-          v-model="info.userId"
+          placeholder="Email"
+          v-model="info.userEmail"
         />
         <br />
         <input
@@ -60,7 +60,7 @@
         />
         <br />
         <div class="mainMobFind">
-          <router-link to="/find"><p>아이디/비밀번호 찾기</p></router-link>
+          <router-link to="/find"><p>이메일/비밀번호 찾기</p></router-link>
         </div>
         <br />
         <button class="blueBtn" @click="login">로그인</button>
@@ -95,7 +95,7 @@ export default {
     const router = useRouter()
     const info = reactive({
       size: true,
-      userId: '',
+      userEmail: '',
       userPw: '',
       dialogVisible: false,
       message: '',
@@ -118,10 +118,10 @@ export default {
     )
 
     const login = function() {
-      if (info.userId && info.userPw) {
+      if (info.userEmail && info.userPw) {
         axios
           .post('https://k5d105.p.ssafy.io:3030/users/login', {
-            id: info.userId,
+            id: info.userEmail,
             password: info.userPw,
           })
           .then(() => {
@@ -129,7 +129,7 @@ export default {
           })
           .catch(() => {
             info.dialogVisible = true
-            info.message = '아이디 또는 비밀번호가 잘못 되었습니다'
+            info.message = '이메일 또는 비밀번호가 잘못 되었습니다'
           })
       }
     }
@@ -217,7 +217,7 @@ export default {
 }
 
 .mainLoginDiv > div:nth-child(2) > span:nth-child(1) {
-  margin-right: 10px;
+  margin-right: 39px;
 }
 
 .mainFind {

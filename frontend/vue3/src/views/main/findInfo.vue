@@ -4,7 +4,7 @@
       <span>{{ info.message }}</span>
     </el-dialog>
     <div class="findId">
-      <h2 v-if="info.find">아이디 찾기</h2>
+      <h2 v-if="info.find">이메일 찾기</h2>
       <h2 v-else>비밀번호 찾기</h2>
       <div v-if="!info.result">
         <p v-if="info.find">가입 시 등록한 이메일을 입력해 주세요</p>
@@ -13,13 +13,13 @@
           <el-input
             v-model="info.userEmail"
             placeholder="이메일"
-            @keyup.enter="clickFindId"
+            @keyup.enter="clickFindEmail"
           ></el-input>
         </div>
         <div v-else>
           <el-input
-            v-model="info.userId"
-            placeholder="아이디"
+            v-model="info.userPhone"
+            placeholder="전화번호"
             @keyup.enter="clickFindPw"
           ></el-input>
           <el-input
@@ -32,9 +32,9 @@
           class="findIdBtn blueBtn"
           v-if="info.find"
           type="button"
-          @click="clickFindId"
+          @click="clickFindEmail"
         >
-          아이디 찾기
+          이메일 찾기
         </button>
         <button
           class="findIdBtn blueBtn"
@@ -48,7 +48,7 @@
 
       <div v-else>
         <div v-if="info.find">
-          <span>아이디: {{ info.userId }}</span>
+          <span>이메일: {{ info.userId }}</span>
         </div>
         <div v-else>
           <p style="margin-top:5%">비밀번호 변경</p>
@@ -98,7 +98,7 @@
         type="button"
         @click=";(info.find = true), (info.result = false)"
       >
-        아이디 찾기
+        이메일 찾기
       </button>
     </div>
   </div>
@@ -116,8 +116,8 @@ export default {
 
     const info = reactive({
       find: true,
-      userId: '',
       userEmail: '',
+      userPhone: '',
       dialogVisible: false,
       message: '',
       result: false,
@@ -157,7 +157,7 @@ export default {
       },
     })
 
-    const clickFindId = function() {
+    const clickFindEmail = function() {
       if (info.userEmail) {
         axios
           .post('https://k5d105.p.ssafy.io:3030/users/findID', {
@@ -210,7 +210,7 @@ export default {
       changePwForm,
       info,
       state,
-      clickFindId,
+      clickFindEmail,
       clickFindPw,
       clickChangePw,
     }
