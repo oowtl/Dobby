@@ -1,24 +1,37 @@
 <template>
-  <div class="modal" v-show="isOpen">
+  <div class="modal" v-if="isOpen">
     <div class="modal-content">
       <div class="modal-content-header">
-        <span class="close" @click="hide">&times;</span>
+        <span style="fontSize: 2rem">{{ state.mData.title }}</span>
+        <div>
+          <i class="el-icon-edit modalIcon"></i>
+          <i class="el-icon-delete modalIcon"></i>
+          <i class="el-icon-close modalIcon" @click="hide"></i>
+        </div>
       </div>
       <div class="modal-content-body">
         <div class="modal-content-body-1">
           <div class="modal-content-body-1-color">
-            <span class="modal-content-body-1-color-box" v-bind:style="{backgroundColor: getCalendarData.bgColor}"></span>
+            <span class="modal-content-body-1-color-box" v-bind:style="{backgroundColor: state.mData.bgColor}"></span>
           </div>
-          <div class="modal-content-body-1-title">
-            <div class="modal-content-body-1-title-title" >
-              <span>{{ getCalendarData.title }}</span>
-            </div>
-            <div class="modal-content-body-1-title-day">
-              <span>start : {{ getCalendarData.startDate }}</span>
-              <br>  
-              <span>end : {{ getCalendarData.endDate }}</span>
-            </div>
-          </div>  
+          <ul class="modal-content-body-1-title">
+            <li class="modal-content-body-1-title-day">
+              <span style="width: 30%">일시</span>
+              <span v-if="state.mData.allDay">{{ state.mData.startDate }}</span>
+              <span v-if="!state.mData.allDay">{{ state.mData.startDate }} - {{ state.mData.endDate }}</span>
+            </li>
+            <li>
+              <span style="width: 30%">장소</span>
+              <span>구글???!</span>
+            </li>
+            <li class="modal-content-body-1-memo">
+              <span style="width: 30% display: inline-block">메모</span>
+              <span style="width: 70%">
+                메모가 들어가면 되는 곳!Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eius, cum. Praesentium fugiat eaque similique molestiae, provident qui eius repellat maxime eveniet minima nihil officiis, ex consectetur libero voluptatibus nobis nesciunt!
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente quo voluptates laborum ad! Fugiat recusandae accusamus culpa, nam dolorem odio iusto ex nostrum beatae nisi, a unde deserunt voluptatibus explicabo.
+              </span>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
@@ -26,12 +39,18 @@
 </template>
 
 <script>
-import { ref } from "vue";
+
+import { computed, reactive, ref } from "vue";
+import { useStore } from 'vuex'
+
+
 export default {
   props: {
     curModal : { type: Object }
   },
   setup() {
+    const store = useStore()
+
     const isOpen = ref(false);
     const hide = () => {
       isOpen.value = false;
@@ -40,37 +59,19 @@ export default {
       isOpen.value = true;
     };
 
-    return { isOpen, hide, show };
+    const state = reactive({
+      mData: computed(() => store.getters.getModalDataFormat),
+    })
+
+    return { isOpen, hide, show, state };
   },
   data() {
     return {
     }
   },
-  computed: {
-    getCalendarData() {
-      if (this.isOpen) {
-        const { data } = this.curModal
-        return {
-          'title' : data.title,
-          'startDate': data.start,
-          'endDate': data.end,
-          'bgColor': data.backgroundColor,
-          'borderColor': data.borderColor,
-          'textColor': data.textColor,
-        }
-      }
-      return {
-        'title' : '',
-        'startDate': '',
-        'endDate': '',
-        'bgColor': '',
-        'borderColor': '',
-        'textColor': '',
-      }
-    }
-  },
+  
   method: {
-    
+
   }
 };
 </script>
@@ -94,9 +95,12 @@ export default {
 }
 
 .modal-content-header {
-  margin-bottom: 5px;
+  margin-bottom: 1rem;
+  padding: 0 1rem;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #E6E6E6;
 }
 
 .modal-content-body-1 {
@@ -104,7 +108,7 @@ export default {
 }
 
 .modal-content-body-1-color {
-  margin-right: 10px;
+  margin-right: 1rem;
 }
 
 .modal-content-body-1-color-box {
@@ -114,11 +118,42 @@ export default {
   border-radius: 20%;
 }
 
-.close {
+.modal-content-body-1-title {
+  list-style: none;
+  margin-top: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.modal-content-body-1-title > li {
+  margin-bottom: 1rem;
+}
+
+.modal-content-body-1-title > li :first-child {
+  margin-right: 1rem;
+}
+
+.modal-content-body-1-title > li > span {
+  color:#7E8183;
+}
+
+.modal-content-body-1-title-title {
+  margin-bottom: 1rem;
+}
+
+.modal-content-body-1-memo {
+  display: flex;
+}
+
+.modal-content-body-1-title-title > span {
+  font-size: 1.5rem;
+}
+
+.modalIcon {
   padding: 10px;
   cursor: pointer;
   color: #aaa;
-  font-size: 28px;
+  font-size: 1.5rem;
   font-weight: bold;
 }
 </style>
