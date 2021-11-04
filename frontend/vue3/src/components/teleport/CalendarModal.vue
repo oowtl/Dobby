@@ -12,23 +12,22 @@
       <div class="modal-content-body">
         <div class="modal-content-body-1">
           <div class="modal-content-body-1-color">
-            <span class="modal-content-body-1-color-box" v-bind:style="{backgroundColor: state.mData.bgColor}"></span>
+            <span class="modal-content-body-1-color-box" v-bind:style="{backgroundColor: state.mData.ModalDate.backgroundColor}"></span>
           </div>
           <ul class="modal-content-body-1-title">
             <li class="modal-content-body-1-title-day">
               <span style="width: 30%">일시</span>
-              <span v-if="state.mData.allDay">{{ state.mData.startDate }}</span>
-              <span v-if="!state.mData.allDay">{{ state.mData.startDate }} - {{ state.mData.endDate }}</span>
+              <span v-if="state.mData.allDay">{{ state.mData.startDay }}</span>
+              <span v-if="!state.mData.allDay" style="fontSize: 0.9rem">{{ state.mData.startDay }} - {{ state.mData.endDay }}</span>
             </li>
             <li>
               <span style="width: 30%">장소</span>
-              <span>구글???!</span>
+              <span>{{ state.mData.ModalDate.extendedProps.placeName }}</span>
             </li>
             <li class="modal-content-body-1-memo">
               <span style="width: 30% display: inline-block">메모</span>
               <span style="width: 70%">
-                메모가 들어가면 되는 곳!Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eius, cum. Praesentium fugiat eaque similique molestiae, provident qui eius repellat maxime eveniet minima nihil officiis, ex consectetur libero voluptatibus nobis nesciunt!
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente quo voluptates laborum ad! Fugiat recusandae accusamus culpa, nam dolorem odio iusto ex nostrum beatae nisi, a unde deserunt voluptatibus explicabo.
+                {{ state.mData.ModalDate.extendedProps.content }}
               </span>
             </li>
           </ul>

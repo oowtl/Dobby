@@ -133,13 +133,7 @@ export default {
       }
       // state 와 동기화 해주기
       this.cData.map(
-        c => calendarApi.addEvent({
-          title: c.title,
-          start: c.start,
-          end: c.end,
-          color: c.color,
-          textColor: 'black',
-        })
+        c => calendarApi.addEvent(c)
       )
     },
   }
