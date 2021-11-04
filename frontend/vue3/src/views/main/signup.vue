@@ -159,7 +159,6 @@ export default {
             params: { email: state.form.email },
           })
           .then((res) => {
-            console.log(res)
             if (res.data.valid) {
               info.dialogVisible = true
               info.message = '사용 가능한 이메일입니다'
@@ -181,7 +180,6 @@ export default {
             },
           })
           .then((res) => {
-            console.log(res)
             if (res.data.valid) {
               info.dialogVisible = true
               info.message = '사용 가능한 닉네임입니다'
@@ -201,19 +199,21 @@ export default {
             axios
               .post('https://k5d105.p.ssafy.io:3030/users/signup', {
                 name: state.form.userName,
-                phone: state.form.phone,
-                nickname: state.form.nick,
+                phone: state.form.userPhone,
+                nickname: state.form.userNick,
                 password: state.form.password,
                 email: state.form.email,
                 address: state.form.address,
               })
               .then(() => router.push({ name: 'SuccessSignup' }))
+              .catch((err) => console.log(err))
           } else {
             info.dialogVisible = true
             info.message = '중복 확인을 해 주세요'
           }
         } else {
-          console.log('fail')
+          info.dialogVisible = true
+          info.message = '입력 값들을 확인해 주세요'
         }
       })
     }

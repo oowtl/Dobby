@@ -121,10 +121,13 @@ export default {
       if (info.userEmail && info.userPw) {
         axios
           .post('https://k5d105.p.ssafy.io:3030/users/login', {
-            id: info.userEmail,
+            email: info.userEmail,
             password: info.userPw,
           })
-          .then(() => {
+          .then((res) => {
+            console.log(res)
+            localStorage.setItem('token', res.data.token.accessToken)
+            localStorage.setItem('uid', res.data.user.uid)
             router.push({ name: 'Calendar' })
           })
           .catch(() => {

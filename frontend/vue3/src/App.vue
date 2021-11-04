@@ -7,6 +7,7 @@
     <router-link to="/calendar">Calendar</router-link> |
     <router-link to="/schedule">Schedule</router-link> |
     <router-link to="/chart">chart</router-link> |
+    <button @click="logout">logout</button> |
   </div>
   <div class="teleport-modal">
     <teleportExample />
@@ -19,10 +20,28 @@
 <script>
 // teleport
 import teleportExample from '@/components/teleport/teleportExample'
+import axios from 'axios'
+import { useRouter } from 'vue-router'
 
 export default {
   components: {
     teleportExample,
+  },
+  setup() {
+    const router = useRouter()
+
+    const logout = function() {
+      axios
+        .post('https://k5d105.p.ssafy.io:3030/users/logout', {
+          idToken: localStorage.getItem('token'),
+        })
+        .then(() => {
+          localStorage.removeItem('token')
+          localStorage.removeItem('uid')
+          router.push({ name: 'main' })
+        })
+    }
+    return { logout }
   },
 }
 </script>

@@ -11,9 +11,15 @@
         <p v-else>가입 시 등록한 정보를 입력해 주세요</p>
         <div v-if="info.find">
           <el-input
-            v-model="info.userEmail"
-            placeholder="이메일"
+            v-model="info.userName"
+            placeholder="이름"
             @keyup.enter="clickFindEmail"
+          ></el-input>
+          <el-input
+            v-model="info.userPhone"
+            placeholder="전화번호"
+            @keyup.enter="clickFindEmail"
+            maxlength="11"
           ></el-input>
         </div>
         <div v-else>
@@ -21,6 +27,7 @@
             v-model="info.userPhone"
             placeholder="전화번호"
             @keyup.enter="clickFindPw"
+            maxlength="11"
           ></el-input>
           <el-input
             v-model="info.userEmail"
@@ -48,7 +55,7 @@
 
       <div v-else>
         <div v-if="info.find">
-          <span>이메일: {{ info.userId }}</span>
+          <span>이메일: {{ info.userEmail }}</span>
         </div>
         <div v-else>
           <p style="margin-top:5%">비밀번호 변경</p>
@@ -116,6 +123,7 @@ export default {
 
     const info = reactive({
       find: true,
+      userName: '',
       userEmail: '',
       userPhone: '',
       dialogVisible: false,
@@ -158,14 +166,15 @@ export default {
     })
 
     const clickFindEmail = function() {
-      if (info.userEmail) {
+      if (info.userName && info.userPhone) {
         axios
           .post('https://k5d105.p.ssafy.io:3030/users/findID', {
-            email: info.userEmail,
+            name: info.userName,
+            phone: info.userPhone,
           })
           .then((res) => {
             info.result = true
-            info.userId = res.data.id
+            info.userEmail = res.data.id
           })
           .catch(() => {
             info.dialogVisible = true
@@ -175,11 +184,11 @@ export default {
     }
 
     const clickFindPw = function() {
-      if (info.userId && info.userEmail) {
+      if (info.userPhone && info.userEmail) {
         axios
           .post('https://k5d105.p.ssafy.io:3030/users/findPW', {
-            id: info.userId,
             email: info.userEmail,
+            phone: info.userPhone,
           })
           .then(() => {
             info.result = true
@@ -195,13 +204,15 @@ export default {
       changePwForm.value.validate((valid) => {
         if (valid) {
           axios
-            .post('https://k5d105.p.ssafy.io:3030/users/changePW', {
-              id: info.userId,
+            .put('https://k5d105.p.ssafy.io:3030/users/changePW', {
+              email: info.userEmail,
               password: state.form.password,
             })
             .then(() => {
               info.dialogVisible = true
               info.message = '비밀번호가 변경되었습니다'
+              state.form.password = ''
+              state.form.checkPw = ''
             })
         }
       })
