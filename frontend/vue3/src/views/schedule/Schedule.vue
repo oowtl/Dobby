@@ -9,7 +9,7 @@
         <div>
             <span>날짜</span>
             <div>   
-                <input type="date" v-model="dataBegin"> ~ <input type="date" v-model="dataEnd">
+                <input type="date" v-model="dateBegin"> ~ <input type="date" v-model="dateEnd">
             </div>         
         </div>
         <br>
@@ -38,7 +38,7 @@
         </div>
 
         <div>
-            <button>취소</button> <button type="button" v-bind:disabled="title==''">추가</button>
+            <button>취소</button> <button type="button" @click="addSchedule" v-bind:disabled="title==''">추가</button>
         </div>
     
     </div>
@@ -47,6 +47,9 @@
 
 
 <script>
+import axios from 'axios';
+// import { useRouter } from 'vue-router';
+
 export default {
     name: 'Schedule',
     components : {
@@ -54,23 +57,54 @@ export default {
     },
     data() {
         return {
-            title: '',
-            dataBegin: '',
-            dataEnd: '',
-            timeStart: '',
-            timeFinish: '',
-            place: '',
-            importance:'5',
-            picked: "",
-            memo: '메모를 입력하세요',
-        };
+                title: '',
+                dateBegin: '',
+                dateEnd: '',
+                timeStart: '',
+                timeFinish: '',
+                place: '',
+                importance:'5',
+                picked: "",
+                memo: '메모를 입력하세요'
+        }
     },
-    setup() {},
+    setup() {
+    },
     create() {},
     mounted() {},
     unmounted() {},
     methods: {
+        async addSchedule() {
+            this.title = await this.api('http://k5d105.p.ssafy.io:3000/calendar/personal','post',{})
+        },
+        async api(url, method, data) {
+            return (await axios({
+                method: method,
+                url: url,
+                data: data
+            }).catch(e => {
+                console.log(e);
+            })).data;
+        }
+    //     const clickAdd = function() {
+    //         getSchedule() {
+    //         console.log('store axios')
+    //         axios
+    //             .post(`http://k5d105.p.ssafy.io:3000/calendar/personal`, {
+    //                 title = state.form.title
+    //             })
 
+    //             .then( response => {
+    //             console.log('getCalendar Response')
+    //             console.log(response)
+    //             }
+    //             )
+    //             .catch( error => {
+    //             console.log('getCalendar Error')
+    //             console.log(error)
+    //             })
+    //     }
+    // }
     }
 }
 </script>

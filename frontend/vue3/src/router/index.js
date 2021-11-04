@@ -9,6 +9,7 @@ import UpdateGroup from '@/views/group/update-group'
 import GroupInfo from '@/views/group/group-info-admin'
 import Calendar from '@/views/calendar/Calendar'
 import Schedule from '@/views/schedule/Schedule'
+import sideBar from '@/views/sidebar/sideBar'
 
 const routes = [
   {
@@ -69,6 +70,11 @@ const routes = [
     path: '/schedule',
     name: 'Schedule',
     component: Schedule,
+  },
+  {
+    path: '/sideBar',
+    name: 'sideBar',
+    component: sideBar,
   },
 ]
 
