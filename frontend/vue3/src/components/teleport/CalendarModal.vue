@@ -5,7 +5,7 @@
         <span style="fontSize: 2rem">{{ state.mData.title }}</span>
         <div>
           <i class="el-icon-edit modalIcon"></i>
-          <i class="el-icon-delete modalIcon"></i>
+          <i class="el-icon-delete modalIcon" @click="delEvent"></i>
           <i class="el-icon-close modalIcon" @click="hide"></i>
         </div>
       </div>
@@ -42,6 +42,8 @@
 
 import { computed, reactive, ref } from "vue";
 import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
+import axios from 'axios';
 
 
 export default {
@@ -50,6 +52,7 @@ export default {
   },
   setup() {
     const store = useStore()
+    const router = useRouter()
 
     const isOpen = ref(false);
     const hide = () => {
@@ -59,11 +62,33 @@ export default {
       isOpen.value = true;
     };
 
+    const delEvent = () => {
+      if (confirm(" 해당 일정을 정말로 삭제하시겠습니까? ")) {
+        console.log('삭제')
+
+        // 삭제 axios 요청
+        axios
+          .delete('https://k5d105.p.ssafy.io:3030/calendar/deleteCalendar',
+            {
+              uid: 'uuu',
+              cid: 'ccc'
+            })
+            .then(() => {
+              router.go(router.currentRoute)
+            })
+      } else {
+        console.log('x')
+      }
+    }
+
+
     const state = reactive({
       mData: computed(() => store.getters.getModalDataFormat),
     })
 
-    return { isOpen, hide, show, state };
+  
+
+    return { isOpen, hide, show, state, delEvent };
   },
   data() {
     return {
@@ -71,7 +96,23 @@ export default {
   },
   
   method: {
-
+    dddd: function() {
+      this.$confirm('This will permanently delete the file. Continue?', 'Warning', {
+          confirmButtonText: 'OK',
+          cancelButtonText: 'Cancel',
+          type: 'warning'
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: 'Delete completed'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'Delete canceled'
+          });          
+        });
+    }
   }
 };
 </script>
