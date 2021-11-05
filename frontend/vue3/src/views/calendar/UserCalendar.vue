@@ -102,7 +102,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['setModal']),
+    ...mapActions(['setModal', 'refreshCalendarData']),
 
     handleClickDate: function (arg) {
       alert('check your schedule!' + arg.dateStr)
@@ -125,6 +125,7 @@ export default {
       console.log('init data')
       let calendarApi = this.$refs.fullCalendar.getApi()
       const data = calendarApi.getEvents()
+
       // 중복을 방지하기 위해서!
       if (data.length) {
         data.map(
@@ -133,8 +134,12 @@ export default {
       }
       // state 와 동기화 해주기
       this.cData.map(
-        c => calendarApi.addEvent(c)
-      )
+        (c) => {
+          calendarApi.addEvent(c)
+        })
+        
+      const refreshData = calendarApi.getEvents()
+      this.refreshCalendarData(refreshData)
     },
   }
 }

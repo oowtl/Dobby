@@ -11,6 +11,7 @@ export default createStore({
     isData: false,
     calendarData: [],
     modalData: {},
+    refreshData: [],
     todayToDoList: [],
   },
   mutations: {
@@ -26,6 +27,10 @@ export default createStore({
     setModalData ( state, payload ) {
       console.log(payload)
       state.modalData = payload
+    },
+    refreshCalData ( state, payload ) {
+      //todoList 뽑기...
+      state.refreshData = payload
     }
   },
   actions: {
@@ -66,6 +71,10 @@ export default createStore({
     },
     setModal( { commit }, payload ) {
       commit('setModalData', payload)
+    },
+    refreshCalendarData ( { commit }, payload ) {
+      console.log(payload)
+      commit('refreshCalData', payload)
     }
   },
   modules: {},
@@ -94,10 +103,29 @@ export default createStore({
       }
     },
     getTodayToDoList ( state ) {
-      const calData =  state.calendarData
-      var date = dayjs()
+      const calData =  state.refreshData
+      let date = dayjs()
       dayjs.extend(isBetween)
-      return calData.filter((day) => date.isBetween(day.startDate, day.endDate))
+      return calData.filter((day) => {
+        /* 
+          today 조건
+          1. 오늘이 시작과 끝 사이다
+          2. 끝나는 날이 오늘이다
+          3. 시작하는 날이 오늘이다
+          ( allday )
+          4. 종일일정이 오늘이다
+          5. 하루 시작과 끝이 오늘이다.
+        */
+        if (date.isBetween(day.startStr, day.endStr)) {
+          return day
+        }
+        if (date.isSame(day.startStr, 'day')) {
+          return day
+        }
+        if (date.isSame(day.endStr, 'day')) {
+          return day
+        }
+      })
     }
   }
 })

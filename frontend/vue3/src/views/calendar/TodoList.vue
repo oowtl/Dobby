@@ -1,20 +1,29 @@
 <template>
   <div class="todoList">
-    {{ state.mData}}
+    <TodoListInfo />
   </div>
 </template>
 
 <script>
-import { computed, reactive } from 'vue'
+import { computed, provide, reactive } from 'vue'
 import { useStore } from 'vuex'
+
+import TodoListInfo from '@/views/calendar/TodoListInfo'
+
 export default {
   name: "TodoList",
-
+  components: {
+    TodoListInfo
+  },
   setup() {
     const store = useStore()
     const state = reactive({
       mData: computed(() => store.getters.getTodayToDoList)
-    })    
+    })
+
+    provide( 'todayData',
+      computed(() => store.getters.getTodayToDoList)
+    )
 
     return { state }
   }
