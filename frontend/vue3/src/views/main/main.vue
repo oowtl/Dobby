@@ -50,6 +50,7 @@
           type="text"
           placeholder="Email"
           v-model="info.userEmail"
+          @keyup.enter="login"
         />
         <br />
         <input
@@ -57,6 +58,7 @@
           type="password"
           placeholder="PW"
           v-model="info.userPw"
+          @keyup.enter="login"
         />
         <br />
         <div class="mainMobFind">
