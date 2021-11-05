@@ -3,7 +3,7 @@
         <h1>일정 추가</h1>
         <div>
             <span>제목 : </span>
-            <input type="text" v-model="title">
+            <input type="text" v-model="state.title">
         </div>
         <br>
         <div>
@@ -49,62 +49,64 @@
 <script>
 import axios from 'axios';
 // import { useRouter } from 'vue-router';
+import { reactive } from 'vue'
 
 export default {
     name: 'Schedule',
     components : {
         
     },
-    data() {
-        return {
-                title: '',
-                dateBegin: '',
-                dateEnd: '',
-                timeStart: '',
-                timeFinish: '',
-                place: '',
-                importance:'5',
-                picked: "",
-                memo: '메모를 입력하세요'
-        }
-    },
-    setup() {
-    },
-    create() {},
-    mounted() {},
-    unmounted() {},
-    methods: {
-        async addSchedule() {
-            this.title = await this.api('http://k5d105.p.ssafy.io:3000/calendar/personal','post',{})
-        },
-        async api(url, method, data) {
-            return (await axios({
-                method: method,
-                url: url,
-                data: data
-            }).catch(e => {
-                console.log(e);
-            })).data;
-        }
-    //     const clickAdd = function() {
-    //         getSchedule() {
-    //         console.log('store axios')
-    //         axios
-    //             .post(`http://k5d105.p.ssafy.io:3000/calendar/personal`, {
-    //                 title = state.form.title
-    //             })
-
-    //             .then( response => {
-    //             console.log('getCalendar Response')
-    //             console.log(response)
-    //             }
-    //             )
-    //             .catch( error => {
-    //             console.log('getCalendar Error')
-    //             console.log(error)
-    //             })
+    // data() {
+    //     return {
+    //             title: 'bb',
+    //             dateBegin: '',
+    //             dateEnd: '',
+    //             timeStart: '',
+    //             timeFinish: '',
+    //             place: '',
+    //             importance:'5',
+    //             picked: "",
+    //             memo: '메모를 입력하세요'
     //     }
-    // }
+    // },
+    setup() {
+        const state = reactive({
+            title:''
+        })
+    //     async addSchedule() {
+    //         this.title = await this.api('http://k5d105.p.ssafy.io:3000/calendar/personal','post',{})
+    //     },
+    //     async api(url, method, data) {
+    //         return (await axios({
+    //             method: method,
+    //             url: url,
+    //             data: data
+    //         }).catch(e => {
+    //             console.log(e);
+    //         })).data;
+    //     }
+        const addSchedule = function() {
+            console.log(this.title)
+            console.log('store axios')
+            axios
+                .post(`http://k5d105.p.ssafy.io:3000/calendar/createCalendar`, {
+                    title : state.title
+                })
+
+                .then( response => {
+                console.log('getCalendar Response')
+                console.log(response)
+                }
+                )
+                .catch( error => {
+                console.log('getCalendar Error')
+                console.log(error)
+                })
+        }
+        return {
+            state,
+            addSchedule
+        }
     }
 }
 </script>

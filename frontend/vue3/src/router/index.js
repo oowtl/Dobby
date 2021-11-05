@@ -5,11 +5,11 @@ import Signup from '@/views/main/signup'
 import SuccessSignup from '@/views/main/success-signup'
 import FindInfo from '@/views/main/findInfo'
 import NewGroup from '@/views/group/new-group'
-import UpdateGroup from '@/views/group/update-group'
-import GroupInfo from '@/views/group/group-info-admin'
+import GroupInfo from '@/views/group/group-info'
 import Calendar from '@/views/calendar/Calendar'
 import Schedule from '@/views/schedule/Schedule'
 import sideBar from '@/views/sidebar/sideBar'
+import Chart from '@/views/chart/chart'
 
 const routes = [
   {
@@ -52,11 +52,6 @@ const routes = [
     component: NewGroup,
   },
   {
-    path: '/updategroup',
-    name: 'UpdateGroup',
-    component: UpdateGroup,
-  },
-  {
     path: '/group',
     name: 'GroupInfo',
     component: GroupInfo,
@@ -75,6 +70,11 @@ const routes = [
     path: '/sideBar',
     name: 'sideBar',
     component: sideBar,
+  },
+  {
+    path: '/chart',
+    name: 'Chart',
+    component: Chart,
   },
 ]
 
