@@ -15,8 +15,9 @@
     
 
 <script>
-import { reactive} from 'vue'
-// import axios from 'axios'
+import { reactive, onBeforeMount} from 'vue'
+import axios from 'axios'
+
 
 export default {
   name: 'sideBar',
@@ -27,10 +28,35 @@ export default {
       userId: '',
     })
     
+    onBeforeMount(() => {
+      axios.get('http://k5d105.p.ssafy.io:3000/users/getUserInfo',{params: {
+          uid : localStorage.getItem('uid')
+      } })
+        .then(response =>
+            this.userId = response.uid)
+        .error(error => console.log(error))
+    })
     return {
       info
     }
+  
+
   },
+
+  
+        // axios.
+        // post(`${BASE_URL}get`,{
+        //     uid: localStorage.getItem('uid')
+        // })
+        // .then( response => {
+        //     console.log('getCalendar Response')
+        //     console.log(response)
+        
+        // })
+        // .catch( error => {
+        //     console.log(error)
+        // })
+
 }
 </script>
 
