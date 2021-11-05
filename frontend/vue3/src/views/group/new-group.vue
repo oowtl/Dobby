@@ -40,7 +40,7 @@
         </el-form-item>
       </el-form>
       <router-link to="/main"><button class="redBtn">취소</button></router-link>
-      <button class="blueBtn" type="button" @click="clickNewGroupBtn">
+      <button class="blueBtn" type="button" @click="createNewGroup">
         생성
       </button>
     </div>
@@ -79,20 +79,26 @@ export default {
       },
     })
 
-    const clickNewGroupBtn = function() {
+    const createNewGroup = function() {
       newGroupForm.value.validate((valid) => {
         if (valid) {
-          axios.post('http://localhost:8080/group', {
-            groupTitle: state.form.groupTitle,
-            info: state.form.info,
-          })
           console.log(valid)
+          axios
+            .post('http://localhost:8080/group', {
+              uid: localStorage.getItem('uid'),
+              name: state.form.groupTitle,
+              description: state.form.info,
+              private: state.form.private,
+              password: state.form.password,
+            })
+            .then((res) => console.log(res))
+            .catch((err) => console.log(err))
         } else {
           console.log(valid)
         }
       })
     }
-    return { state, newGroupForm, clickNewGroupBtn }
+    return { state, newGroupForm, createNewGroup }
   },
 }
 </script>
