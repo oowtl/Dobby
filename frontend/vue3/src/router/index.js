@@ -51,9 +51,10 @@ const routes = [
     component: NewGroup,
   },
   {
-    path: '/group',
+    path: '/:gid',
     name: 'GroupInfo',
     component: GroupInfo,
+    props: true,
   },
   {
     path: '/calendar',
