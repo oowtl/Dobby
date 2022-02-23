@@ -1,8 +1,15 @@
 # Dobby
 
-***
+Dobby 는 일정관리 서비스를 이용하면서 느낀 불편함을 개선하고자 개발한 서비스입니다.
+기존의 일정관리 서비스에서 일정등록을 할 때, 목적지를 등록하고 목적지로 갈 수 있는 방법을 찾는 것은 다른 서비스를 이용하는 것이 비효율적이라고 생각했습니다.
+Dobby 는 이러한 부분을 개선하기 위해서 목적지를 등록하고 바로 경로탐색을 할 수 있도록 했습니다.
+또한 친구들과 일정을 공유하기 쉽도록 그룹을 만들어서 일정관리를 할 수 있도록 했습니다.
 
-- 구미 1반 D105 팀 (채승협, 박준홍, 신지현, 허창환, 황규진)
+
+
+## 팀원
+
+- 채승협, 박준홍, 신지현, 허창환, 황규진
 
 ## 🤹 역할
 
@@ -15,10 +22,10 @@
   - 허창환: REST API 서버 개발, Firebase 환경 설정 및 설계 (Firebase Cloud Messaging, Authentication)연동, OSRM 서버 환경 구축
 
 
-# Architecture
+## Architecture
 
 
-## 📖 기술 스택
+### 📖 기술 스택
 
 - 언어 : c++, javascript, html
 
@@ -41,7 +48,7 @@
   
 
 
-## 📖 기술 버전
+### 📖 기술 버전
 
 - Nodejs : v10.19.0
 
@@ -112,7 +119,7 @@
     
         git :　https://github.com/Project-OSRM/osrm-backend
 
-# 1. Architecture
+## 1. Architecture
 
 ***
 
@@ -120,7 +127,7 @@
 
 
 
-# 2. Project Data Structure
+## 2. Project Data Structure
 
 ***
 
@@ -164,7 +171,7 @@
 
 
 
-# 3. Firestore Data Model
+## 3. Firestore Data Model
 
 ***
 
@@ -245,7 +252,7 @@
 
 
 
-# 4. MockUp
+## 4. MockUp
 
 ***
 
@@ -255,7 +262,7 @@
 
 
 
-# 5. Rest ApI Document
+## 5. Rest ApI Document
 
 ***
 
@@ -265,7 +272,7 @@
 
 
 
-# 6. 시연
+## 6. 시연
 
 ****
 
